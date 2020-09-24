@@ -1,0 +1,32 @@
+{
+  "name": "productview",
+  "version": "1.0.0",
+  "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrr48-BlueJayWay/productView.git"
+  },
+  "author": "Ahmed-Elawad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrr48-BlueJayWay/productView/issues"
+  },
+  "homepage": "https://github.com/hrr48-BlueJayWay/productView#readme",
+  "devDependencies": {
+    "@babel/preset-react": "^7.10.4",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.1.0",
+    "nodemon": "^2.0.4",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
