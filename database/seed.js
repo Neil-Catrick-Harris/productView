@@ -42,7 +42,7 @@ let images = (function() {
 });
 
 
-const seedDb = function(callback) {
+const seedDb = function() {
     let failCount = 0;
     for (let i = 1; i <= 100; i++) {
         id = i;
@@ -70,5 +70,4 @@ const seedDb = function(callback) {
         });
     };
 };
-
-module.exports.seed = seedDb;
+seedDb();
