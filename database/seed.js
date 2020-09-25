@@ -71,9 +71,4 @@ const seedDb = function(callback) {
     };
 };
 
-const clearDb = function(callBack) {
-    return connection.clear(callBack);
-};
-
 module.exports.seed = seedDb;
-module.exports.clear = clearDb;
