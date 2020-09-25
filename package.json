@@ -20,12 +20,16 @@
     "@babel/preset-react": "^7.10.4",
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "express": "^4.17.1",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.7",
+    "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
