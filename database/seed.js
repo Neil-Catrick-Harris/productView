@@ -1,6 +1,8 @@
 const faker = require('faker');
 const connection = require('./index.js');
 
+// define object placeholders for future use
+// uses faker.js to generate randomized information
 let name = faker.commerce.productName();
 let id;
 let description = faker.commerce.productDescription();
@@ -30,6 +32,9 @@ let sizes = {
         return list;
     })()
 };
+
+// TODO: currently generates random links from faker.js
+// need to pull links from AWS S3
 let images = (function() {
     let imagesArr = [];
     let count = Math.floor(Math.random() * 15);
@@ -41,7 +46,9 @@ let images = (function() {
     return imagesArr;
 });
 
-
+// seed database with 100 records
+// use deifned placeholder objects to geenerate sample data
+// TODO: Seed links from AWS file instead of generic links
 const seedDb = function() {
     let failCount = 0;
     for (let i = 1; i <= 100; i++) {

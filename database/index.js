@@ -33,6 +33,10 @@ const ItemSchema = mongoose.Schema({
 
 const Item = mongoose.model('Item', ItemSchema);
 
+// saves documents to db
+// product details should be an object with the architecture
+// of itemSchema
+// returns callback invoked with error or result
 const save =  function(productDetails, callback) {
     mongoose.connect('mongodb://localhost/productDetails', options)
     .catch(err => callback(err));
@@ -46,6 +50,8 @@ const save =  function(productDetails, callback) {
             .catch(err => callback(err))
 }
 
+// clear database
+// returns callback invoked with error or result obj
 const clear = function(callback) {
     mongoose.connect('mongodb://localhost/productDetails', options)
     .then(con => console.log('connected to DB'))
