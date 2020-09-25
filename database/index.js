@@ -35,10 +35,8 @@ const Item = mongoose.model('Item', ItemSchema);
 
 const save =  function(productDetails, callback) {
     mongoose.connect('mongodb://localhost/productDetails', options)
-    .then(con => console.log('connected'))
     .catch(err => callback(err));
 
-    console.log(productDetails);
     const ProductModel = new Item(productDetails);
     return ProductModel.save()
             .then(res => {
@@ -50,8 +48,8 @@ const save =  function(productDetails, callback) {
 
 const clear = function(callback) {
     mongoose.connect('mongodb://localhost/productDetails', options)
-    .then(con => callback(null, con))
-    .catch(err => callback(er));
+    .then(con => console.log('connected to DB'))
+    .catch(err =>  console.error(er));
 
     return Item.collection.remove()
     .then(res => {
@@ -60,5 +58,7 @@ const clear = function(callback) {
     })
     .catch(err => callback(err));
 };
+
+module.exports.db = Item;
 module.exports.clear = clear;
 module.exports.save = save;
