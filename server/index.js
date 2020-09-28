@@ -7,12 +7,11 @@ app.use(express.urlencoded({extended: true}));
 // app.use(express.static());
 
 app.get('/product/:id', (req, res) => {
-    const { params } = req;
-    db.Model.find({id: params.id})
-    .then( resp => {
+    db.Model.find({id: req.params.id})
+    .then((resp) => {
         res.json(resp)
     })
-    .catch(err => {
+    .catch((err) => {
         res.end(err);
     })
 })
