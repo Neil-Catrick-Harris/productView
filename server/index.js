@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const db = require('../database/index.js');
+const path = require('path');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('client/dist'));
 
 app.get('/product/:id', (req, res) => {
     db.find({id: req.params.id})
@@ -15,5 +17,5 @@ app.get('/product/:id', (req, res) => {
     })
 })
 
-const port = 3000;
+const port = 1212;
 app.listen(port, () => console.log(`Listening on port:${port}`));
