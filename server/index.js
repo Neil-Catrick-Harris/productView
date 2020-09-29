@@ -17,5 +17,5 @@ app.get('/product/:id', (req, res) => {
     })
 })
 
-const port = 1212;
+const port = 3000;
 app.listen(port, () => console.log(`Listening on port:${port}`));
