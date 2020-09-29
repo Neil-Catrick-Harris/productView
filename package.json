@@ -2,11 +2,12 @@
   "name": "productview",
   "version": "1.0.0",
   "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
-  "main": "/",
+  "main": "/main",
   "scripts": {
     "test": "jest",
     "seed:db": "node ./database/seed",
-    "clear:db": "node ./database/clear"
+    "clear:db": "node ./database/clear",
+    "start": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
