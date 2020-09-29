@@ -4,7 +4,6 @@ const db = require('../database/index.js');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-// app.use(express.static());
 
 app.get('/product/:id', (req, res) => {
     db.Model.find({id: req.params.id})
