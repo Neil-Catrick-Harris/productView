@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.get('/product/:id', (req, res) => {
-    db.Model.find({id: req.params.id})
+    db.find({id: req.params.id})
     .then((resp) => {
         res.json(resp)
     })

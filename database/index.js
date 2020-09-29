@@ -5,6 +5,7 @@ const options =  {
     useCreateIndex: true
 };
 
+mongoose.connect('mongodb://localhost/productDetails', options);
 
 const ItemSchema = mongoose.Schema({
     name: String,
@@ -33,38 +34,4 @@ const ItemSchema = mongoose.Schema({
 
 const Item = mongoose.model('Item', ItemSchema);
 
-// saves documents to db
-// product details should be an object with the architecture
-// of itemSchema
-// returns callback invoked with error or result
-const save =  function(productDetails, callback) {
-    mongoose.connect('mongodb://localhost/productDetails', options)
-    .catch(err => callback(err));
-
-    const ProductModel = new Item(productDetails);
-    return ProductModel.save()
-            .then(res => {
-                mongoose.connection.close();
-                callback(null, res);
-            })
-            .catch(err => callback(err))
-}
-
-// clear database
-// returns callback invoked with error or result obj
-const clear = function(callback) {
-    mongoose.connect('mongodb://localhost/productDetails', options)
-    .then(con => console.log('connected to DB'))
-    .catch(err =>  console.error(er));
-
-    return Item.collection.remove()
-    .then(res => {
-            mongoose.connection.close();
-            callback(null, res)
-    })
-    .catch(err => callback(err));
-};
-
-module.exports.db = Item;
-module.exports.clear = clear;
-module.exports.save = save;
+module.exports = Item;
