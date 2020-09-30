@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const server = require('../server/app.js');
 const request = require('supertest');
 
-afterAll( async () => {
-    await mongoose.connection.close();
+afterAll( () => {
+    mongoose.connection.close();
 });
 
 describe('API endpoints response', function() {
     
-    test('recieves and responds to get request to /product/15', async (done) => {
-    return await request(server)
+    test('recieves and responds to get request to /product/15', (done) => {
+    return request(server)
       .get('/product/15')
       .then(  (res) => {
           return res.body[0];
