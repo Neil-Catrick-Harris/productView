@@ -4,7 +4,7 @@
   "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
   "main": "/main",
   "scripts": {
-    "test": "jest",
+    "test": "jest /tests --detectOpenHandles --coverage",
     "seed:db": "node ./database/seed",
     "clear:db": "node ./database/clear",
     "start": "nodemon server/index.js"
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hrr48-BlueJayWay/productView#readme",
   "devDependencies": {
     "@babel/preset-react": "^7.10.4",
+    "@shelf/jest-mongodb": "^1.2.3",
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
@@ -28,6 +29,7 @@
     "faker": "^5.1.0",
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
+    "supertest": "^5.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
