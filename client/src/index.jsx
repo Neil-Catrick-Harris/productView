@@ -1,14 +1,35 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import ImageGrid from './components/ImageGrid.jsx';
+const axios = require('axios');
 
 class App extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            productDetails: null
+        }
     }
-
+    componentDidMount() {
+        axios.get('products/75')
+           .then((res) => {
+               this.setState({
+                   productDetails: res.data[0]
+               })
+           })
+           .catch((err) => {
+               console.error(err);
+           })
+    }
     render() {
         return (
-        <div>Hello world!!!</div>
+        <div>
+            <div id='imageGrid'>
+                {this.state.productDetails ?
+                    <ImageGrid images ={this.state.productDetails.imageUrls}/> : 
+                <div>Loading images...</div>}
+            </div>
+        </div>
         )
     }
 }

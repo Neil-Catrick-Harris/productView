@@ -2,11 +2,11 @@
   "name": "productview",
   "version": "1.0.0",
   "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
-  "main": "/main",
+  "main": "./server",
   "scripts": {
     "test": "jest /tests --detectOpenHandles --coverage",
     "seed:db": "node ./database/seed",
-    "start:dev": "webpack -d --watch"
+    "build": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.7",
