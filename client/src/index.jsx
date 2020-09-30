@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import ImageGrid from './components/ImageGrid.jsx';
 const axios = require('axios');
 
-class App extends React.Component {
+class Service extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,4 +34,4 @@ class App extends React.Component {
     }
 }
 
-ReactDom.render(<App />, document.getElementById('app'))
+ReactDom.render(<Service />, document.getElementById('app'))
