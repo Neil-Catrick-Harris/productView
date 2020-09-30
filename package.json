@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest /tests --detectOpenHandles --coverage",
     "seed:db": "node ./database/seed",
-    "clear:db": "node ./database/clear",
-    "start": "nodemon server/index.js"
+    "start:dev": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
@@ -20,6 +19,7 @@
   },
   "homepage": "https://github.com/hrr48-BlueJayWay/productView#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@shelf/jest-mongodb": "^1.2.3",
     "babel": "^6.23.0",
