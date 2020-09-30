@@ -11,7 +11,7 @@ class Service extends React.Component {
         }
     }
     componentDidMount() {
-        axios.get('products/75')
+        axios.get('product/75')
            .then((res) => {
                this.setState({
                    productDetails: res.data[0]
