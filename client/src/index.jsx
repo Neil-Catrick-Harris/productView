@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import ImageGrid from './components/ImageGrid.jsx';
 const axios = require('axios');
 import ImageCarousel from './components/Imagecarousel.jsx';
+import GlobalStyle from './createGlobalStyle';
 
 class Service extends React.Component {
     constructor(props) {
@@ -26,12 +27,14 @@ class Service extends React.Component {
     }
     render() {
         return (
-            <div id='imageDisplay'>
+            <div className='moduleDisplay'>
+                <GlobalStyle />
                 {this.state.productDetails ?
-                <div>
+                <Fragment>
                     <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
                     <ImageCarousel className="imagePopup" show={this.state.showCarousel} images={this.state.productDetails.imageUrls}/>
-                </div> : 
+                </Fragment> 
+                : 
                 <div>Loading images...</div>}
             </div>
         )
