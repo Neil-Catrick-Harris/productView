@@ -15,6 +15,12 @@ class Packaging extends React.Component {
             clicked: !this.state.clicked
         });
     }
+    static getDerivedStateFromProps(props, state) {
+        return {
+            productInformation: props.item,
+            clicked: false
+        }
+    }
     render() {
         return (
             <div id="packaging header">
