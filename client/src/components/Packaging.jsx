@@ -23,10 +23,10 @@ class Packaging extends React.Component {
     }
     render() {
         return (
-            <div id="packaging header">
-                <div id='packaging title' onClick={() => this.handleClick()} >Sustainability &amp; environment</div>
-                <a className='packaging arrow' />
-                <div id='packaging details'>
+            <div >
+                <div onClick={() => this.handleClick()} >Sustainability &amp; environment</div>
+                <a id='arrow' />
+                <div>
                     <div>Import and render packaging object</div>
                 </div>
             </div>
