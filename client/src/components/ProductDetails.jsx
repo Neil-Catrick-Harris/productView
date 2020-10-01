@@ -15,9 +15,9 @@ class ProductDetails extends React.Component {
         return (
             <div className='productDetails'>
                 <div id='productDetails  mainDisplay'>Product Details</div>
-                <div id='productDetails mainDisplay arrow'></div>
-                <div className='popuppanel' id='popupdetails'>
-                    <div id='productDetails popup description'>Generic description</div>
+                <a id='arrow'/>
+                <div>
+                    <div>Generic description</div>
                 </div>
             </div>
         )
