@@ -23,10 +23,10 @@ class Sustainability extends React.Component {
     }
     render() {
         return (
-            <div id="sustainibility header">
-                <div id='sustainibility title' onClick={() => this.handleClick()} >Sustainability &amp; environment</div>
-                <a className='sustainibility arrow' />
-                <div id='sustainibility info'>{this.state.productInformation}</div>
+            <div>
+                <div onClick={() => this.handleClick()} >Sustainability &amp; environment</div>
+                <a id='arrow' />
+                <div>{this.state.productInformation}</div>
             </div>
 
         )
