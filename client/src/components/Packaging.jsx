@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from './Modal.jsx';
 
 class Packaging extends React.Component {
     constructor(props) {
