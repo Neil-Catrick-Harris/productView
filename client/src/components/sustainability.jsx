@@ -4,7 +4,7 @@ class Sustainability extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productInformation: 'generic text generic text generic text generic text generic text generic text ',
+            productInformation: null,
             clicked: false
         };
         this.handleClick.bind(this);
@@ -14,6 +14,12 @@ class Sustainability extends React.Component {
         this.setState({
             clicked: !this.state.clicked
         });
+    }
+    
+    static getDerivedStateFromProps(props, state) {
+        return  {
+            productInformation: props.item.description
+        }
     }
     render() {
         return (
