@@ -4,11 +4,18 @@ class ImageCarousel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            images:  this.props.images,
+            images: null,  
             displayed: null
         }
     }
 
+    static getDerivedStateFromProps(props, state) {
+        debugger;
+        return {
+            images: props.images,
+            displayed: props.clickedImage
+        }
+    }
     render() {
         return (
             <div className="imageCarousel">
