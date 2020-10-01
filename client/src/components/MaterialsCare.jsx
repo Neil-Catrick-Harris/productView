@@ -14,7 +14,6 @@ class ProductDetails extends React.Component {
         this.setState({
             clicked: !this.state.clicked
         });
-        console.log(this.state.clicked);
     }
     render() {
         return (
