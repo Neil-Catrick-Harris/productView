@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import ImageGrid from './components/ImageGrid.jsx';
 const axios = require('axios');
+import ImageCarousel from './components/Imagecarousel.jsx';
 
 class Service extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            productDetails: null
+            productDetails: null,
+            showCarousel: false,
+            clickedImage: ['http:////placeimg.com/640/480/people']
         }
     }
     componentDidMount() {
@@ -23,13 +26,14 @@ class Service extends React.Component {
     }
     render() {
         return (
-        <div>
-            <div id='imageGrid'>
+            <div id='imageDisplay'>
                 {this.state.productDetails ?
-                    <ImageGrid images ={this.state.productDetails.imageUrls}/> : 
+                <div>
+                    <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
+                    <ImageCarousel className="imagePopup" show={this.state.showCarousel} images={this.state.productDetails.imageUrls}/>
+                </div> : 
                 <div>Loading images...</div>}
             </div>
-        </div>
         )
     }
 }
