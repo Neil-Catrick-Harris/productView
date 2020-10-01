@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         height: 100%;
     }
-    
+
     #app {
         height: 75%;
         width: 100%;
