@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from '../styled.js';
 
-const GridWrapper = styles.imageGridWrapper();
-const Image = styles.image();
+const GridWrapper = styles.imageGridWrapper;
+const Image = styles.image;
 
 class ImageGrid extends React.Component {
     constructor(props) {
