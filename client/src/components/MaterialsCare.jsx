@@ -15,6 +15,13 @@ class MaterialsCare extends React.Component {
             clicked: !this.state.clicked
         });
     }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            productInformation: props.information,
+            clicked: false
+        }
+    }
     render() {
         return (
             <div id="materialscare header">
