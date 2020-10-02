@@ -1,12 +1,11 @@
+import React from 'react';
 
 const SizeDetails = ({details}) => {
     return (
         <div>
             <div>Product size</div>
             <br />
-            {details.measurments.map((value) => {
-                return  <div>{details.attributes}: {value}</div>
-            })}
+            <div>testing 123</div>
         </div>
     )
 };
