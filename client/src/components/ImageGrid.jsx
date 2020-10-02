@@ -20,7 +20,6 @@ class ImageGrid extends React.Component {
     }
 
     handleImageClick() {
-        debugger;
         this.setState({clicked: !this.state.clicked});
     }
     render() {
