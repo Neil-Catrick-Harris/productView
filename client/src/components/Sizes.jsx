@@ -2,15 +2,14 @@ import React from 'react';
 import Styled from 'styled-components';
 import SizeDetails from './SizeDetails.jsx';
 import  Modal from './Modal.jsx';
+import { ArrowIosForwardOutline } from '@styled-icons/evaicons-outline'
 
 const  ProductInformation = Styled.div`
     border-top: 1px solid #f5f5f5;
 `;
 
-const Arrow = Styled.svg`
-    clip-rule: evenodd;
-`;
 const ProductInfoBtn = Styled.button`
+    display: flex;
     background: none;
     overflow: hidden;
     border: 0;
@@ -50,6 +49,7 @@ class Sizes extends React.Component {
     }
 
     render() {
+        debugger;
         return (
             <ProductInformation>
                 <ProductInfoBtn onClick={() => this.handleClick()}>
@@ -57,10 +57,9 @@ class Sizes extends React.Component {
                         <ProductTitle>Product size</ProductTitle>
                         <ProductSubTitle>{this.props.sizes.fitting}</ProductSubTitle>
                     </Productheadings>
-                    <Arrow fill-rule="evenodd" clip-Rule="evenodd" viewBox="0 0 24 24" 
-                    path="M15.5996 11.9999L9.81456 17.7857L8.40026 16.3716L12.7714 11.9999L8.40026 7.62823L9.81457 6.21411L15.5996 11.9999Z" />
+                    <ArrowIosForwardOutline size='15'/>    
                 </ProductInfoBtn>
-                <Modal show={this.state.clicked} Content={[{section: SizeDetails, props: this.props.product}]} />
+                {this.state.clicked && <Modal Content={[{section: this.props, props: this.props.product}]} />}
             </ProductInformation>
         )
     }
