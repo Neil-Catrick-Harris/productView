@@ -15,18 +15,18 @@ let sizes = {
     attributes: faker.lorem.sentence(),
     measurments: (function() {
         let list =[];
-        let count = Math.floor(Math.random() * 6);
+        let count = Math.floor(Math.random() * 6 + 3);
         for (let i = 0; i < count; i++) {
-            list.push(Math.floor(Math.random() * 10));
+            list.push(Math.floor(Math.random() * 10 + 3));
         }
-        
+
         return list;
     })()
 };
 
 let images = (function() {
     let imagesArr = [];
-    let count = Math.floor(Math.random() * 15);
+    let count = Math.floor(Math.random() * 15 + 5);
 
     for (i = 0; i < count; i++) {
         let imageUrl = faker.image.fashion();
@@ -49,7 +49,7 @@ const seedDb = function() {
             sustainibility: faker.lorem.sentence(),
             packaging: packaging,
             sizes: sizes,
-            imagesUrls: images()
+            imageUrls: images()
         };
         dataArray.push(productDetails);
     };

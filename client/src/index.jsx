@@ -33,7 +33,6 @@ class Service extends React.Component {
                 {this.state.productDetails ?
                 <Fragment>
                     <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
-                    <ProductDetails product={this.state.productDetails} />
                 </Fragment> 
                 : 
                 <div>Loading images...</div>}
