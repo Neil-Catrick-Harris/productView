@@ -31,8 +31,7 @@ let sizes = () => {
 
 let images = (function() {
     let imagesArr = [];
-    let count = Math.floor(Math.random() * 15);
-
+    let count = Math.floor(Math.random() * 15 + 6);
     for (i = 0; i < count; i++) {
         let imageUrl = faker.image.fashion();
         imagesArr.push(imageUrl);
@@ -54,7 +53,7 @@ const seedDb = function() {
             sustainibility: faker.lorem.sentence(),
             packaging: packaging(),
             sizes: sizes(),
-            imagesUrls: images()
+            imageUrls: images()
         };
         dataArray.push(productDetails);
     };
