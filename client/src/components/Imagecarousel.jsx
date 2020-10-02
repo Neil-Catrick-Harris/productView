@@ -41,25 +41,43 @@ class ImageCarousel extends React.Component {
         super(props);
         this.state = {
             images: null,  
-            displayed: null
-        }
+            numOfImages: null,
+            currentImage: null
+        };
     }
 
-    static getDerivedStateFromProps(props, state) {
-        return {
-            images: props.images
-        }
+    componentDidMount() {
+        this.setState({
+            images: this.props.images,
+            numOfImages: this.props.images.length,
+            currentImage: Math.floor(this.props.images.length / 2)
+        })
+    }
+    viewPrevious() {
+        if (this.state.currentImage === 0) return;
+        this.setState({
+            currentImage: this.state.currentImage - 1
+        })
+    }
+    viewNext() {
+        if (this.state.currentImage === this.state.numOfImages - 1) return;
+        this.setState({
+            currentImage: this.state.currentImage + 1
+        })
     }
     render() {
         return (
-            <CarouselModal>
-                <BackArrow>
+            this.state.images && <CarouselModal>
+                <BackArrow onClick={() => this.viewPrevious()}>
                     <ArrowIosBackOutline size='48'/>
                 </BackArrow>
                 <CarouselImageWrapper>
-                    {<CarouselImage src={this.state.images[2]} key={'asjenfvjandjnvdjwanvj'} />}
+                    {<CarouselImage 
+                    src={this.state.images[this.state.currentImage]} 
+                    key={'asjenfvjandjnvdjwanvj'}
+                    />}
                 </CarouselImageWrapper>
-                <ForwardArrow>
+                <ForwardArrow onClick={() => this.viewNext()}>
                     <ArrowIosForwardOutline size='48'/>
                 </ForwardArrow>
             </CarouselModal>
