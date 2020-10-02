@@ -3,6 +3,10 @@ import MaterialsCare from './MaterialsCare.jsx';
 import Sustainibility from './Sustainability.jsx';
 import Packaging from './Packaging.jsx';
 import Modal from './Modal.jsx';
+import styles from '../styled.js';
+
+const ProductDetailsWrapper = styles.productDetailsWrapper;
+const StyledButton = styles.moduleClickButton;
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -18,17 +22,18 @@ class ProductDetails extends React.Component {
     }
     render() {
         return (
-            <div className='productDetails'>
-                <div  onClick={() => this.handleClick()}  id='productDetails  mainDisplay'>Product Details</div>
+            <ProductDetailsWrapper>
+                <StyledButton>
+                <span  onClick={() => this.handleClick()}  id='productDetails  mainDisplay'>Product Details</span>
                 <a id='arrow'/>
-                <Modal 
-                show={this.state.clicked}
+                { this.state.clicked && <Modal
                 Content={[
                     { section: <div>{this.state.header}</div>},
                     { section: <div>{this.props.product.description}<br /><br /></div>}
                 ]}
-                />
-            </div>
+                />}
+                </StyledButton>
+            </ProductDetailsWrapper>
         )
     }
 }
