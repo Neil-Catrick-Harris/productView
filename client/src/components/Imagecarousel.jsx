@@ -31,13 +31,13 @@ const CarouselImage = styled.img`
 
 const BackArrow = styled.div`
     grid-area: backArrow;
-    position; absolute;
+    position: absolute;
     margin: auto;
 `;
 
 const ForwardArrow = styled.div`
     grid-area: forwardArrow;
-    position; absolute;
+    position: absolute;
     margin: auto;
 `;
 
