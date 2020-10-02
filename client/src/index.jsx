@@ -4,6 +4,7 @@ import ImageGrid from './components/ImageGrid.jsx';
 const axios = require('axios');
 import ImageCarousel from './components/Imagecarousel.jsx';
 import GlobalStyle from './createGlobalStyle';
+import ProductDetails from './components/ProductDetails.jsx';
 
 class Service extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class Service extends React.Component {
                 {this.state.productDetails ?
                 <Fragment>
                     <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
-                    <ImageCarousel className="imagePopup" show={this.state.showCarousel} images={this.state.productDetails.imageUrls}/>
+                    <ProductDetails product={this.state.productDetails} />
                 </Fragment> 
                 : 
                 <div>Loading images...</div>}
