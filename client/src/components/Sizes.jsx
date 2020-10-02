@@ -49,7 +49,6 @@ class Sizes extends React.Component {
     }
 
     render() {
-        debugger;
         return (
             <ProductInformation>
                 <ProductInfoBtn onClick={() => this.handleClick()}>
@@ -59,7 +58,9 @@ class Sizes extends React.Component {
                     </Productheadings>
                     <ArrowIosForwardOutline size='15'/>    
                 </ProductInfoBtn>
-                {this.state.clicked && <Modal Content={[{section: this.props, props: this.props.product}]} />}
+                {this.state.clicked && 
+                    <Modal Content={[{section: SizeDetails, props: {attributes: this.props.sizes.attributes, image: this.props.image}}]} />
+                }
             </ProductInformation>
         )
     }
