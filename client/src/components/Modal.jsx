@@ -20,12 +20,14 @@ const Show = styled(View)`
     display:  block;`;
 
 const Modal = ({Content, show}) => {
-    debugger;
 return !show ? <Hide /> : <Show>{Content.map(Item => {
-    if  (item.prop) {
-        return  <Item details={item.prop} />
+    if (Item.section instanceof Function) {
+        if  (Item.props) {
+            return  <Item.section details={Item.props} />
+        }
+        return <Item.section />
     }
-    return <Item />
+    return <div>{Item.section}</div>
 })}</Show>
 };
 
