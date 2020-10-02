@@ -72,7 +72,7 @@ class ImageCarousel extends React.Component {
                     <ArrowIosBackOutline size='48'/>
                 </BackArrow>
                 <CarouselImageWrapper>
-                    {<CarouselImage src={this.state.images[this.state.currentImage]} key={'asjenfvjandjnvdjwanvj'} />}
+                    {<CarouselImage src={this.state.images[this.state.currentImage]} key={this.state.images[this.state.currentImage]}/>}
                 </CarouselImageWrapper>
                 <ForwardArrow onClick={() => this.viewNext()}>
                     <ArrowIosForwardOutline size='48'/>
