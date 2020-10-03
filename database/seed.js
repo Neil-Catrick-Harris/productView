@@ -14,6 +14,7 @@ let packaging = () => {
     };
     return details;
 };
+
 let sizes = () => {
     let details = {
         fitting: faker.lorem.words() + ` (${faker.lorem.words()})`,
@@ -53,6 +54,8 @@ const seedDb = function() {
             sustainibility: faker.lorem.sentence(),
             packaging: packaging(),
             sizes: sizes(),
+
+         
             imageUrls: images()
         };
         dataArray.push(productDetails);
