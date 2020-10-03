@@ -1,33 +1,38 @@
 const faker = require('faker');
 const db = require('./index.js');
 
-let packaging = {
-    shortDesc: faker.lorem.words(),
-    measurments: {
-        width: Math.floor(Math.random() * 15),
-        height: Math.floor(Math.random() * 25),
-        length: Math.floor(Math.random() * 5),
-        weight: Math.floor(Math.random() * 25),
-        packages: Math.floor(Math.random() * 3),
-    }
-};
-let sizes = {
-    attributes: faker.lorem.sentence(),
-    measurments: (function() {
-        let list =[];
-        let count = Math.floor(Math.random() * 6 + 3);
-        for (let i = 0; i < count; i++) {
-            list.push(Math.floor(Math.random() * 10 + 3));
+let packaging = () => {
+    let details = {
+        shortDesc: faker.lorem.sentence(),
+        measurments: {
+            width: Math.floor(Math.random() * 15 + 6),
+            height: Math.floor(Math.random() * 25 + 10),
+            length: Math.floor(Math.random() * 11 + 4),
+            weight: Math.floor(Math.random() * 25 + 13),
+            packages: Math.floor(Math.random() * 3 + 1),
         }
+    };
+    return details;
+};
 
-        return list;
-    })()
+let sizes = () => {
+    let details = {
+        fitting: faker.lorem.words() + ` (${faker.lorem.words()})`,
+        attributes: {
+            "thread-count": Math.floor(Math.random() * 300 + 100),
+            "Pillowcase quantity": Math.floor(Math.random() * 4 + 2),
+            "Duvet cover length": Math.floor(Math.random() * 4 + 2),
+            "Duvet cover width": Math.floor(Math.random() * 4 + 2),
+            "Pillowcase length": Math.floor(Math.random() * 4 + 2),
+            "Pillowcase width": Math.floor(Math.random() * 4 + 2)
+        }
+    };
+    return  details;
 };
 
 let images = (function() {
     let imagesArr = [];
-    let count = Math.floor(Math.random() * 15 + 5);
-
+    let count = Math.floor(Math.random() * 15 + 6);
     for (i = 0; i < count; i++) {
         let imageUrl = faker.image.fashion();
         imagesArr.push(imageUrl);
@@ -47,8 +52,10 @@ const seedDb = function() {
             details: faker.lorem.sentence(),
             materials: faker.lorem.sentence(),
             sustainibility: faker.lorem.sentence(),
-            packaging: packaging,
-            sizes: sizes,
+            packaging: packaging(),
+            sizes: sizes(),
+
+         
             imageUrls: images()
         };
         dataArray.push(productDetails);

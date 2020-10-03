@@ -26,8 +26,15 @@ const ItemSchema = mongoose.Schema({
         }
     },
     sizes: {
-        attributes: String,
-        measurments: [Number]
+        fitting: String,
+        attributes: {
+            "thread-count": Number,
+            "Pillowcase quantity": Number,
+            "Duvet cover length": Number,
+            "Duvet cover width": Number,
+            "Pillowcase length": Number,
+            "Pillowcase width": Number
+        }
     },
     imageUrls: [String]
 });
