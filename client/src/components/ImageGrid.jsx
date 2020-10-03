@@ -6,17 +6,15 @@ const GridWrapper = styles.imageGridWrapper;
 const Image = styles.image;
 
 class ImageGrid extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {
-            imageUrls: []
-        }
+        this.state = {imageUrls: []};
         this.handleImageClick.bind(this);
     }
+
     componentDidMount() {
-        this.setState({
-            imageUrls: this.props.images
-        });
+        this.setState({imageUrls: this.props.images});
     }
 
     handleImageClick() {
@@ -27,12 +25,7 @@ class ImageGrid extends React.Component {
             <GridWrapper>
                 {this.state.imageUrls.map((url, index) => {
                     if (index > 5) return;
-                    return <Image
-                        onClick={() => this.handleImageClick()}
-                        index={index + 1}
-                        src={url}
-                        key={url + index}
-                    />
+                    return <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
                 })}
                 {this.state.clicked && <ImageCarousel images={this.state.imageUrls} />}
             </GridWrapper>

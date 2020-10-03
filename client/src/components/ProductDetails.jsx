@@ -23,7 +23,7 @@ class ProductDetails extends React.Component {
 
     handleClick() {
         this.setState({ clicked: !this.state.clicked});
-        this.props.onSelect();
+        this.props.showModal();
     }
     render() {
         return (
