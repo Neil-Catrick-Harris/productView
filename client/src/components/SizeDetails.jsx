@@ -30,11 +30,23 @@ const DescriptionTag = Styled.dt`
     font-weight: 700;
 `;
 
-const ImageContainer = Styled.div`
-    display: flex;
-    margin: auto;
-    
+const MediaSection = Styled.div`
+    margin: 0;
+    padding: 0;
 `;
+
+const ImageView = Styled.div`
+    margin-bottom: 2.5rem;
+`;
+const ImageContainer = Styled.div`
+    overflow: hidden;
+`;
+const Image = Styled.img`
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+`;
+
 const SizeDetails = (props) => {
     let ProductDetails = [];
     for (let attr in props.details.attributes) {
@@ -46,11 +58,17 @@ const SizeDetails = (props) => {
             </ListItemContainer>
         ));
     }
-    debugger;
     return (
         <ProductDetailsContainer>
             <SectionTitle>Product size</SectionTitle>
-    <SectionDetails>{ProductDetails}</SectionDetails>
+            <SectionDetails>{ProductDetails}</SectionDetails>
+            <MediaSection>
+                <ImageView>
+                    <ImageContainer>
+                        <Image src={props.details.image}/>
+                    </ImageContainer>
+                </ImageView>
+            </MediaSection>
         </ProductDetailsContainer>
     )
 };
