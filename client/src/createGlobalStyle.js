@@ -5,8 +5,8 @@ const GlobalStyle = createGlobalStyle`
     body {
         height: 100%;
         background-color: ${(props) => {
-           return  props.modalClicked ? "white" : "rgba(0,0,0,0.1)"; 
-        }}
+            return  props.modalClicked ? "white" : "rgba(0,0,0,0.1)"; 
+         }}
     }
 
     #app {
