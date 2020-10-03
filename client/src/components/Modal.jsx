@@ -18,7 +18,6 @@ const View = Styled.div`
 
 const ExitPane = Styled.div`
     padding: .625rem 1.0625rem;
-
 `;
 
 const ModalContent = Styled.div`
@@ -29,15 +28,16 @@ const ModalContent = Styled.div`
 const Modal = ({Content}) => {
 return <View>
     <ExitPane>Exit the module here</ExitPane>
-    {Content.map(Item => {
-    if (Item.section instanceof Function) {
-        if  (Item.props) {
-            return  <Item.section details={Item.props} />
-        }
-        return <Item.section />
-    }
-    return <div>{Item.section}</div>
-})}</View>
+    <ModalContent>
+        {Content.map(Item => {
+            if (Item.section instanceof Function) {
+                if  (Item.props) return  <Item.section details={Item.props}/>;
+                return <Item.section/>
+        } 
+        return <div>{Item.section}</div>
+    })}
+    </ModalContent>
+    </View>
 };
 
 
