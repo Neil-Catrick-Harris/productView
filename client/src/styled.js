@@ -58,7 +58,6 @@ const styles = {
             padding-top: 1.5rem;
             padding-bottom: 4rem;
             height: auto;
-            visibility: ${(props) => {return props.show ? "visible" : "hidden"}};
             opacity: 1;
         `,
         icon: Styled.svg`

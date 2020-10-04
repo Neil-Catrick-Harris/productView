@@ -45,7 +45,7 @@ class ProductDetails extends React.Component {
                 </SectionButton>
                     { this.state.clicked && <Modal handleClose={this.handleClick.bind(this)}
                     Content={[
-                        {section: <div>{this.state.header}</div>},
+                        {section: <SectionTitle>{this.state.header}</SectionTitle>},
                         {section: <div>{this.props.product.description}<br /><br /></div>},
                         {section: MaterialsCare, props: this.props.product.materials},
                         {section: Sustainibility, props: this.props.product.sustainibility},
