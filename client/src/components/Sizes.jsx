@@ -47,6 +47,13 @@ class Sizes extends React.Component {
         this.props.showModal();
     }
 
+    shouldComponentUpdate() {
+        if (this.props.bodyClicked) {
+            this.setState({clicked: false})
+        }
+        return true;
+    }
+
     render() {
         return (
             <ProductInformation>
@@ -58,7 +65,7 @@ class Sizes extends React.Component {
                     <ArrowIosForwardOutline size='15'/>    
                 </ProductInfoBtn>
                 {this.state.clicked && 
-                    <Modal Content={[{section: SizeDetails, props: {attributes: this.props.sizes.attributes, image: this.props.image}}]} />
+                    <Modal handleClose={this.handleClick.bind(this)} Content={[{section: SizeDetails, props: {attributes: this.props.sizes.attributes, image: this.props.image}}]} />
                 }
             </ProductInformation>
         )

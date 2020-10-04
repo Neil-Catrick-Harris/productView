@@ -25,6 +25,12 @@ class ProductDetails extends React.Component {
         this.setState({ clicked: !this.state.clicked});
         this.props.showModal();
     }
+    shouldComponentUpdate() {
+        if (this.props.bodyClicked) {
+            this.setState({clicked: false})
+        }
+        return true;
+    }
     render() {
         return (
             <SectionContainer>
@@ -37,7 +43,7 @@ class ProductDetails extends React.Component {
                         </path>
                     </Icon>
                 </SectionButton>
-                    { this.state.clicked && <Modal
+                    { this.state.clicked && <Modal handleClose={this.handleClick.bind(this)}
                     Content={[
                         {section: <div>{this.state.header}</div>},
                         {section: <div>{this.props.product.description}<br /><br /></div>},
