@@ -43,9 +43,9 @@ class Packaging extends React.Component {
                         <path fillRule="evenodd" clipRule="evenodd" d="M12.0001 15.5997L6.21432 9.81468L7.62844 8.40038L12.0001 12.7715L16.3718 8.40038L17.7859 9.81469L12.0001 15.5997Z" />
                     </Icon>
                 </SectionButton>
-                <SectionContent show={this.state.clicked}>
+                {this.state.clicked && <SectionContent show={this.state.clicked}>
                     <SpecContainer>{packagingEntries}</SpecContainer>
-                </SectionContent>
+                </SectionContent>}
             </SectionContainer>
 
         )
