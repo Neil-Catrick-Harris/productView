@@ -97,6 +97,27 @@ const styles = {
             margin: 0;
             padding: 0;
         `
+    },
+    modalStyles: {
+        iconContainer: Styled.span`
+            height: 2.5rem;
+            padding: 0 .5rem;
+            font-size: .75rem;
+            line-height: 1.33333;
+        `,
+        exitBtn: Styled.button`
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        background: transparent;
+        border-radius: 52px;
+        vertical-align: top;
+        `
     }
 };
 
