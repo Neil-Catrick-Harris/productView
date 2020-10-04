@@ -11,7 +11,7 @@ class Service extends React.Component {
         super(props);
         this.state = {
             productDetails: null,
-            showCarousel: false,
+            closeModal: true,
             showModal: false,
             clickedImage: ['http:////placeimg.com/640/480/people']
         }
@@ -23,19 +23,23 @@ class Service extends React.Component {
            .catch((err) => console.error(err));
     }
 
-    handleModalClick() {
+    handleClick() {
         this.setState({showModal: !this.state.showModal})
     }
-    
+
+    closeModal() {
+        if (this.state.showModal) this.setState({showModal: false});
+        return
+    }
     render() {
         return (
-            <div className='moduleDisplay'>
+            <div onClick={() => this.closeModal()} className='moduleDisplay'>
                 <GlobalStyle modalShowing={this.state.showModal}/>
                 {this.state.productDetails ?
                 <Fragment>
                     <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
-                    <ProductDetails showModal={this.handleModalClick.bind(this)} product={this.state.productDetails}/>
-                    <Sizes showModal={this.handleModalClick.bind(this)} sizes={this.state.productDetails.sizes}/>
+                    <ProductDetails bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} product={this.state.productDetails}/>
+                    <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
                 </Fragment> 
                 : <div>Loading images...</div>}
             </div>
