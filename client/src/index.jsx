@@ -5,6 +5,7 @@ const axios = require('axios');
 import GlobalStyle from './createGlobalStyle';
 import ProductDetails from './components/ProductDetails.jsx';
 import Sizes from './components/Sizes.jsx';
+import { moduleContainer } from './styled.js';
 
 class Service extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Service extends React.Component {
     }
     render() {
         return (
-            <div onClick={() => this.closeModal()} className='moduleDisplay'>
+            <moduleContainer onClick={() => this.closeModal()} className='moduleDisplay'>
                 <GlobalStyle modalShowing={this.state.showModal}/>
                 {this.state.productDetails ?
                 <Fragment>
@@ -42,7 +43,7 @@ class Service extends React.Component {
                     <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
                 </Fragment> 
                 : <div>Loading images...</div>}
-            </div>
+            </moduleContainer>
         )
     }
 }
