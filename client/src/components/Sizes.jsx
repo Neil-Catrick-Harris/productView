@@ -35,7 +35,7 @@ class Sizes extends React.Component {
 
     render() {
         return (
-            <SectionContainer>
+            <SectionContainer gridArea='productSizes'>
                 <SectionButton onClick={() => this.handleClick()}>
                     <SectionHeading>
                         <SectionTitle>Product size</SectionTitle>

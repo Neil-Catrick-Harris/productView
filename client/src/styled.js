@@ -21,7 +21,7 @@ const styles = {
         height: 90%;
         width: 95%;
         `,
-    moduleContainer: Styled.div`
+    ModuleContainer: Styled.div`
         display: grid;
         grid-template-areas:
             "imageGrid"
@@ -30,6 +30,7 @@ const styles = {
     `,
     productDetailListing: {
         container: Styled.div`
+            grid-area: ${(props) => props.gridArea}
             border-top: 1px solid #f5f5f5;
         `,
         button: Styled.button`
