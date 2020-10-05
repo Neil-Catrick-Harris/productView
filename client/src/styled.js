@@ -2,6 +2,7 @@ import Styled from 'styled-components';
 
 const styles = {
     imageGridWrapper: Styled.div`
+        grid-area: imageGrid;
         display: grid;
         height: 100%;
         width: 75%;
@@ -20,6 +21,13 @@ const styles = {
         height: 90%;
         width: 95%;
         `,
+    moduleContainer: Styled.div`
+        display: grid;
+        grid-template-areas:
+            "imageGrid"
+            "productDetails"
+            "pruductSizes";
+    `,
     productDetailListing: {
         container: Styled.div`
             border-top: 1px solid #f5f5f5;

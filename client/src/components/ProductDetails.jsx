@@ -33,7 +33,7 @@ class ProductDetails extends React.Component {
     }
     render() {
         return (
-            <SectionContainer>
+            <SectionContainer gridArea="productDetails">
                 <SectionButton onClick={() => this.handleClick()}>
                     <SectionHeading>
                         <SectionTitle>Product Details</SectionTitle>
