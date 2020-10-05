@@ -10,7 +10,7 @@ const SectionButton = styles.productDetailListing.button;
 const SectionHeading = styles.productDetailListing.heading;
 const SectionTitle = styles.productDetailListing.title;
 const SectionContent = styles.productDetailListing.content;
-const Icon = styles.productDetailListing.icon;
+const ArrowIcon = styles.productDetailListing.icon;
 
 class ProductDetails extends React.Component {
     constructor(props) {
@@ -38,10 +38,10 @@ class ProductDetails extends React.Component {
                     <SectionHeading>
                         <SectionTitle>Product Details</SectionTitle>
                     </SectionHeading>
-                    <Icon viewBox='0 0 24 24' focusable="false" ariaHidden="true">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M12.0001 15.5997L6.21432 9.81468L7.62844 8.40038L12.0001 12.7715L16.3718 8.40038L17.7859 9.81469L12.0001 15.5997Z">
+                    <ArrowIcon viewBox='0 0 24 24' focusable="false" ariaHidden="true">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M 15.5996 11.9999 L 9.81456 17.7857 L 8.40026 16.3716 L 12.7714 11.9999 L 8.40026 7.62823 L 9.81457 6.21411 L 15.5996 11.9999 Z">
                         </path>
-                    </Icon>
+                    </ArrowIcon>
                 </SectionButton>
                     { this.state.clicked && <Modal handleClose={this.handleClick.bind(this)}
                     Content={[

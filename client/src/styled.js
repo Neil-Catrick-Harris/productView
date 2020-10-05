@@ -9,11 +9,14 @@ const styles = {
             "image1 image2"
             "image3 image4"
             "image5 image6";
+        grid-template-columns: repeat(6,minmax(0,1fr));
+        grid-column-gap: .9375rem;
+        margin-left: -.46875rem;
+        margin-right: -.46875rem
         `,
     image: Styled.img`
         grid-area: image${(props) => props.index};
         padding: 2px;
-        border: solid silver 1px;
         height: 90%;
         width: 95%;
         `,
