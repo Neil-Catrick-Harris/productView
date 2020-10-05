@@ -23,10 +23,10 @@ class ImageGrid extends React.Component {
     render() {
         return (
             <GridWrapper>
-                {this.state.imageUrls.map((url, index) => {
-                    if (index > 5) return;
-                    return <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
-                })}
+                    {this.state.imageUrls.map((url, index) => {
+                        if (index > 5) return;
+                        return <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
+                    })}
                 {this.state.clicked && <ImageCarousel images={this.state.imageUrls} />}
             </GridWrapper>
         );
