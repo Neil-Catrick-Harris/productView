@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {ArrowIosBackOutline} from '@styled-icons/evaicons-outline';
-import {ArrowIosForwardOutline} from '@styled-icons/evaicons-outline';
-
+import styles from '../styled.js';
+const ArrowIcon = styles.productDetailListing.icon;
 const CarouselModal = styled.div`
     display: grid;
     position: absolute;
@@ -68,15 +67,15 @@ class ImageCarousel extends React.Component {
     render() {
         return (
             this.state.images && <CarouselModal>
-                <BackArrow onClick={() => this.viewPrevious()}>
-                    <ArrowIosBackOutline size='48'/>
-                </BackArrow>
+                <ArrowIcon onClick={() => this.viewPrevious()} viewBox='0 0 24 24' focusable="false" ariaHidden="true">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M7 12.0006L15.0012 3.99992L16.4154 5.41417L9.82838 12.0008L16.4143 18.5876L15 20.0017L7 12.0006Z" />
+                </ArrowIcon>
                 <CarouselImageWrapper>
                     {<CarouselImage src={this.state.images[this.state.currentImage]} key={this.state.images[this.state.currentImage]}/>}
                 </CarouselImageWrapper>
-                <ForwardArrow onClick={() => this.viewNext()}>
-                    <ArrowIosForwardOutline size='48'/>
-                </ForwardArrow>
+                <ArrowIcon onClick={() => this.viewNext()} viewBox='0 0 24 24' focusable="false" ariaHidden="true">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M16.4153 12.0003L8.41407 20.0011L6.9999 18.5868L13.5869 12.0002L7.00097 5.41339L8.41528 3.99927L16.4153 12.0003Z"/>
+                    </ArrowIcon>
             </CarouselModal>
         );
     }
