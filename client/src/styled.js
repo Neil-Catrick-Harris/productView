@@ -2,6 +2,7 @@ import Styled from 'styled-components';
 
 const styles = {
     imageGridWrapper: Styled.div`
+        grid-area: imageGrid;
         display: grid;
         height: 100%;
         width: 75%;
@@ -9,16 +10,27 @@ const styles = {
             "image1 image2"
             "image3 image4"
             "image5 image6";
+        grid-template-columns: repeat(6,minmax(0,1fr));
+        grid-column-gap: .9375rem;
+        margin-left: -.46875rem;
+        margin-right: -.46875rem
         `,
     image: Styled.img`
         grid-area: image${(props) => props.index};
         padding: 2px;
-        border: solid silver 1px;
         height: 90%;
         width: 95%;
         `,
+    ModuleContainer: Styled.div`
+        display: grid;
+        grid-template-areas:
+            "imageGrid"
+            "productDetails"
+            "pruductSizes";
+    `,
     productDetailListing: {
         container: Styled.div`
+            grid-area: ${(props) => props.gridArea}
             border-top: 1px solid #f5f5f5;
         `,
         button: Styled.button`
@@ -58,7 +70,6 @@ const styles = {
             padding-top: 1.5rem;
             padding-bottom: 4rem;
             height: auto;
-            visibility: ${(props) => {return props.show ? "visible" : "hidden"}};
             opacity: 1;
         `,
         icon: Styled.svg`
@@ -96,6 +107,27 @@ const styles = {
         mediaSection: Styled.div`
             margin: 0;
             padding: 0;
+        `
+    },
+    modalStyles: {
+        iconContainer: Styled.span`
+            height: 2.5rem;
+            padding: 0 .5rem;
+            font-size: .75rem;
+            line-height: 1.33333;
+        `,
+        exitBtn: Styled.button`
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        background: transparent;
+        border-radius: 52px;
+        vertical-align: top;
         `
     }
 };

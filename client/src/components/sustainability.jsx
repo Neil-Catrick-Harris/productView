@@ -6,7 +6,7 @@ const SectionHeadings = styles.productDetailListing.heading;
 const SectionBtn = styles.productDetailListing.button;
 const Title = styles.productDetailListing.title;
 const Icon = styles.productDetailListing.icon;
-const Conetent = styles.productDetailListing.content;
+const Content = styles.productDetailListing.content;
 const SectionEntries = styles.productDetailListing.entries;
 const Items = styles.productDetailListing.items;
 const Entry = styles.productDetailListing.entry;
@@ -22,9 +22,7 @@ class Sustainability extends React.Component {
     }
 
     handleClick() {
-        this.setState({
-            clicked: !this.state.clicked
-        });
+        this.setState({clicked: !this.state.clicked});
     }
     
     render() {
@@ -39,13 +37,13 @@ class Sustainability extends React.Component {
                         </path>
                     </Icon>
                 </SectionBtn>
-                <Conetent show={this.state.clicked}>
+                {this.state.clicked && <Content>
                     <SectionEntries>
                         <Items>
                             <Entry key='clksmcs'>{this.props.details}</Entry>
                         </Items>
                     </SectionEntries>
-                </Conetent>
+                </Content>}
             </SectionContainer>
 
         )

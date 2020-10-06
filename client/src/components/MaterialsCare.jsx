@@ -15,18 +15,14 @@ const SectionEntry = styles.productDetailListing.entry;
 class MaterialsCare extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            productInformation: ['testtest', 'testtest', 'testtest', 'testtest', 'testtest'],
-            clicked: false
-        };
+        this.state = { clicked: false };
         this.handleClick.bind(this);
     }
 
     handleClick() {
-        this.setState({
-            clicked: !this.state.clicked
-        });
+        this.setState({clicked: !this.state.clicked});
     }
+    
     render() {
         return (
             <SectionContainer>
@@ -39,7 +35,7 @@ class MaterialsCare extends React.Component {
                         </path>
                     </Icon>
                 </SectionButton>
-                <SectionContent show={this.state.clicked}>
+                {this.state.clicked && <SectionContent show={this.state.clicked}>
                     <SectionEntries >
                         <SectionItems id='materialscare info'>
                             {this.props.details.split(' ').map((snippet, index) => {
@@ -47,7 +43,7 @@ class MaterialsCare extends React.Component {
                             })}
                         </SectionItems>
                     </SectionEntries>
-                </SectionContent>
+                </SectionContent>}
             </SectionContainer>
 
         )

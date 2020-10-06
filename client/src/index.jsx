@@ -2,41 +2,49 @@ import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
 import ImageGrid from './components/ImageGrid.jsx';
 const axios = require('axios');
-import ImageCarousel from './components/Imagecarousel.jsx';
 import GlobalStyle from './createGlobalStyle';
 import ProductDetails from './components/ProductDetails.jsx';
+import Sizes from './components/Sizes.jsx';
+import styles from './styled.js';
+const ModuleContainer  = styles.ModuleContainer;
 
 class Service extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             productDetails: null,
-            showCarousel: false,
+            closeModal: true,
+            showModal: false,
             clickedImage: ['http:////placeimg.com/640/480/people']
         }
     }
+
     componentDidMount() {
         axios.get('product/75')
-           .then((res) => {
-               this.setState({
-                   productDetails: res.data[0]
-               })
-           })
-           .catch((err) => {
-               console.error(err);
-           })
+           .then((res) => this.setState({productDetails: res.data[0]}))
+           .catch((err) => console.error(err));
+    }
+
+    handleClick() {
+        this.setState({showModal: !this.state.showModal})
+    }
+
+    closeModal() {
+        if (this.state.showModal) this.setState({showModal: false});
+        return
     }
     render() {
         return (
-            <div className='moduleDisplay'>
-                <GlobalStyle />
+            <ModuleContainer onClick={() => this.closeModal()} className='moduleDisplay'>
+                <GlobalStyle modalShowing={this.state.showModal}/>
                 {this.state.productDetails ?
                 <Fragment>
                     <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
+                    <ProductDetails bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} product={this.state.productDetails}/>
+                    <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
                 </Fragment> 
-                : 
-                <div>Loading images...</div>}
-            </div>
+                : <div>Loading images...</div>}
+            </ModuleContainer>
         )
     }
 }
