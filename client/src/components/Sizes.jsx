@@ -18,7 +18,7 @@ const ProductSubTitle = Styled(SectionHeading)`
 class Sizes extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {clicked: false};
+        this.state = { clicked: false };
     }
 
     handleClick() {

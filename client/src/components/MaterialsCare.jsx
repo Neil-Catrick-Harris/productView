@@ -15,9 +15,7 @@ const SectionEntry = styles.productDetailListing.entry;
 class MaterialsCare extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            clicked: false
-        };
+        this.state = { clicked: false };
         this.handleClick.bind(this);
     }
 

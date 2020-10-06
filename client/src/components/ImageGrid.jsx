@@ -9,7 +9,7 @@ class ImageGrid extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {imageUrls: []};
+        this.state = { imageUrls: [] };
         this.handleImageClick.bind(this);
     }
 
