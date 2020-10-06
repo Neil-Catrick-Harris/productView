@@ -49,4 +49,4 @@ class Service extends React.Component {
     }
 }
 
-ReactDom.render(<Service />, document.getElementById('app'))
+ReactDom.render(<Service />, document.getElementById('productView'))
