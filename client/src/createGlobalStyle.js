@@ -7,14 +7,15 @@ const GlobalStyle = createGlobalStyle`
         background-color: ${(props) => props.modalShowing ? "rgba(0,0,0,0.1)" : "white"}
     }
 
-    #app {
-        height: 75%;
-        width: 100%;
-    }
-    
-    .moduleDisplay {
-        height: 75%;
+    #productView {
+        display: grid;
+        height: 50%;
         width: 75%;
-    }`;
+        grid-template-areas:
+            "imageGrid"
+            "productDetails"
+            "productSizes";
+    }
+    `;
 
 export default GlobalStyle;
