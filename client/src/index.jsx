@@ -20,7 +20,7 @@ class Service extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('product/75')
+        axios.get('/api/productView/products/75')
            .then((res) => this.setState({productDetails: res.data[0]}))
            .catch((err) => console.error(err));
     }
