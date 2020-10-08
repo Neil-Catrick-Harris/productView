@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest /tests --detectOpenHandles --coverage",
     "seed:db": "node ./database/seed",
-    "build": "webpack -d --watch"
+    "build": "webpack -d --watch",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",

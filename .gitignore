@@ -1,2 +1,6 @@
 node_modules/
 /coverage
+.package.json
+package-lock.json
+globalConfig.json
+.vscode/
