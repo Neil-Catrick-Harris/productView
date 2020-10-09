@@ -4,7 +4,7 @@
   "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
   "main": "./server",
   "scripts": {
-    "test": "jest /tests --detectOpenHandles --coverage",
+    "test": "jest --detectOpenHandles --coverage",
     "seed:db": "node ./database/seed",
     "build": "webpack -d --watch",
     "start": "node server/index.js"
@@ -24,12 +24,16 @@
     "@babel/preset-react": "^7.10.4",
     "@shelf/jest-mongodb": "^1.2.3",
     "babel": "^6.23.0",
+    "babel-jest": "^26.5.2",
     "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-to-json": "^3.6.1",
     "faker": "^5.1.0",
     "jest": "^26.4.2",
+    "jest-puppeteer": "^4.4.0",
     "nodemon": "^2.0.4",
+    "react-test-renderer": "^16.13.1",
     "supertest": "^5.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
