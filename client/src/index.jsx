@@ -6,8 +6,9 @@ import GlobalStyle from './createGlobalStyle';
 import ProductDetails from './components/ProductDetails.jsx';
 import Sizes from './components/Sizes.jsx';
 import styles from './styled.js';
-const ModuleContainer  = styles.ModuleContainer;
 
+const ModuleContainer  = styles.ModuleContainer;
+const ImageGridContainer = styles.imageGridContainer;
 class Service extends React.Component {
     constructor(props) {
         super(props);
@@ -23,13 +24,9 @@ class Service extends React.Component {
         let rx = /(?:\b|-)([1-9]{1,2}[0]?|100)\b/;
         let path = window.location.pathname;
         let id = rx.exec(path);
-        debugger;
         axios.get( id ? `/api/productView/products/${id[0]}` : '/api/productView/products/1')
            .then((res) => this.setState({productDetails: res.data[0]}))
-           .catch((err) => {
-               debugger;
-               console.error(err);
-            });
+           .catch((err) => console.error(err));
     }
 
     handleClick() {
@@ -46,7 +43,9 @@ class Service extends React.Component {
                 <GlobalStyle modalShowing={this.state.showModal}/>
                 {this.state.productDetails ?
                 <Fragment>
-                    <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
+                    <ImageGridContainer>
+                        <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
+                    </ImageGridContainer>
                     <ProductDetails bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} product={this.state.productDetails}/>
                     <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
                 </Fragment> 

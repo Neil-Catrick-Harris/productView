@@ -17,6 +17,9 @@ class ImageGrid extends React.Component {
         this.setState({imageUrls: this.props.images});
     }
 
+    handleClose() {
+        this.setState({clicked: !this.state.clicked});
+    }
     handleImageClick() {
         this.setState({clicked: !this.state.clicked});
     }
@@ -27,7 +30,7 @@ class ImageGrid extends React.Component {
                         if (index > 5) return;
                         return <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
                     })}
-                {this.state.clicked && <ImageCarousel images={this.state.imageUrls} />}
+                {this.state.clicked && <ImageCarousel handleClose={this.handleClose.bind(this)} images={this.state.imageUrls} />}
             </GridWrapper>
         );
     }

@@ -1,10 +1,15 @@
 import Styled from 'styled-components';
 
 const styles = {
+    imageGridContainer: Styled.div`
+        display: block;
+        height: 100%;
+        width: 100%;
+        `,
     imageGridWrapper: Styled.div`
         display: grid;
         height: 100%;
-        width: 75%;
+        width: 100%;
         grid-template-areas:
             "image1 image2"
             "image3 image4"
@@ -70,7 +75,7 @@ const styles = {
             vertical-align: middle;
             fill: currentColor;
             transition-duration: .3s;
-            transition-timing-function: ease;
+            transition-timing-function: ease
         `,
         entries: Styled.div`
             padding-top: 1.5rem;
@@ -101,6 +106,54 @@ const styles = {
         `
     },
     modalStyles: {
+        CarouselModal: Styled.div`
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 9001;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        `,
+        CrouselWrapper: Styled.div`
+            padding: 0;
+            overflow: auto;
+            height: 100%;
+        `,
+        CarouselImageWrapper: Styled.div`
+            grid-area: image;
+            height: 100%;
+        `,
+        CarouselImage: Styled.img`
+            display: block;
+            padding: 2px;
+            align: center;
+            margin: 50% 0 50% 0;
+            border: solid silver 1px;
+        `,
+        CarouselContent: Styled.div`
+            overflow-x: scroll;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            padding-top: .3125rem;
+            padding-bottom: 1.8125rem;
+            scroll-snap-type: x mandatory;
+        `,
+        BackArrow: Styled.div`
+            grid-area: backArrow;
+            position: absolute;
+            margin: auto;
+        `, 
+        ForwardArrow: Styled.div`
+            grid-area: forwardArrow;
+            position: absolute;
+            margin: auto;
+        `,
         iconContainer: Styled.span`
             height: 2.5rem;
             padding: 0 .5rem;
@@ -108,17 +161,31 @@ const styles = {
             line-height: 1.33333;
         `,
         exitBtn: Styled.button`
-        position: relative;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        background: transparent;
-        border-radius: 52px;
-        vertical-align: top;
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            box-sizing: border-box;
+            background: transparent;
+            border-radius: 52px;
+            vertical-align: top;
+        `,
+        ExitPane: Styled.div`
+            padding: 1.5625rem 2.3125rem;
+        `,
+        CarouselButton: Styled.button`
+            position: absolute;
+            top: 50%;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity .2s,visibility 0ms .2s;
+            cursor: pointer;
+            z-index: 1;
+            left: -1.25rem;
+            transform: translateY(-50%);
         `
     }
 };
