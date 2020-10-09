@@ -10,7 +10,7 @@ describe('API endpoints response', function() {
     
     test('recieves and responds to get request to /product/15', (done) => {
     return request(server)
-      .get('/product/15')
+      .get('/api/productView/products/15')
       .then(  (res) => {
           return res.body[0];
       })
@@ -21,3 +21,4 @@ describe('API endpoints response', function() {
       })
     });
 });
+
