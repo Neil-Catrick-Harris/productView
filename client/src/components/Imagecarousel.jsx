@@ -3,39 +3,17 @@ import Styled from 'styled-components';
 import styles from '../styled.js';
 const ExitPane = styles.modalStyles.ExitPane;
 const ButtonContainer = styles.modalStyles.iconContainer;
-const CarouselModal = styles.modalStyles.CarouselModal;
 const Icon = styles.productDetailListing.icon;
-const CarouselWrapper = styles.modalStyles.CrouselWrapper;
-const CarouselImageWrapper = styles.modalStyles.CarouselImageWrapper;
-const CarouselButton = styles.modalStyles.CarouselButton;
-const CarouselContent = styles.modalStyles.CarouselContent;
-const Body = Styled(CarouselContent)`
-     display: flex;
-     margin-right: 0;
-     margin-left: 0;
-     align-items: center;
-`;
-const Slides = Styled(Body)`
-    margin-right: 0;
-    margin-left: 0;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-`;
-const ButtonIconContainer = Styled(ButtonContainer)`
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 0;
-    font-weight: 700;
-    font-size: .875rem;
-    padding: 0;
-    cursor: pointer;
+const CarouselWrapper = styles.modalStyles.Content;
+const NavButton = styles.modalStyles.button;
+const RelativeContentContainer = Styled(CarouselWrapper)`
     position: relative;
-    display: inline-flex;
-    height: 3.5rem;
-    border: 1px solid #dfdfdf;
+`;
+const ImageViewContaier = styles.modalStyles.imageViewContainer;
+const CarouselModal = Styled(styles.modalStyles.View)`
+    width: 100%;
+    max-width: none;
+    animation: slideUp .3s ease forwards;
 `;
 const ExitButton = Styled(Icon)`
     &:hover {
@@ -45,27 +23,21 @@ const ExitButton = Styled(Icon)`
     position: relative;
         horizontal-align: right;
 `;
-const MediaView = Styled(CarouselWrapper)`
+const ImagesWrapper = Styled(CarouselWrapper)`
+    overflow-x: scroll;
+    overflow-y: hidden;
     position: relative;
+    padding: .3rem;
+    scroll-snap-type: x mandatory;
+    top: 0;
 `;
-const CarouselImage = Styled.img`
-    padding-left: 6.25rem;
-    padding-right: 6.25rem;
-    position: relative;
-    margin-right: 0;
-    margin-left: 0;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    width: 100%;
-    display: block;
-    text-align: center;
-`;
-
-
+const ImageFormat = styles.modalStyles.ImageFormat;
+const Images = styles.modalStyles.slidesBody;
+const SlideImageContainer = styles.modalStyles.slideContainer;
 class ImageCarousel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {images: null, numOfImages: null, currentImage: null};
+        this.state = {images: null, zoomed: false};
     }
     componentDidMount() {
         this.setState({
@@ -82,6 +54,9 @@ class ImageCarousel extends React.Component {
         if (this.state.currentImage === this.state.numOfImages - 1) return;
         this.setState({currentImage: this.state.currentImage + 1})
     }
+    changeZoom() { 
+        this.setState({zoomed: !this.state.zoomed});
+    }
     render() {
         return (
             this.state.images && <CarouselModal>
@@ -93,32 +68,25 @@ class ImageCarousel extends React.Component {
                     </ButtonContainer>
                 </ExitPane>
                 <CarouselWrapper>
-                    <MediaView>
-                        <CarouselButton>
-                            <ButtonIconContainer>
-                                <Icon viewBox='0 0 24 24' focusable="false" ariaHidden="true">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 12.0006L15.0012 3.99992L16.4154 5.41417L9.82838 12.0008L16.4143 18.5876L15 20.0017L7 12.0006Z" />
-                                </Icon>åßß
-                            </ButtonIconContainer>
-                        </CarouselButton>
-                        <CarouselContent>
-                            <Body>
-                                <Slides>
-                                {this.state.images.map((url, index) => {
-                                     if (index > 5) return;
-                                    return <CarouselImage onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
-                                 })}
-                                </Slides>
-                            </Body>
-                        </CarouselContent>
-                        <CarouselButton>
-                            <ButtonIconContainer>
-                                <Icon viewBox='0 0 24 24' focusable="false" ariaHidden="true">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 12.0006L15.0012 3.99992L16.4154 5.41417L9.82838 12.0008L16.4143 18.5876L15 20.0017L7 12.0006Z" />
-                                </Icon>
-                            </ButtonIconContainer>
-                        </CarouselButton>
-                    </MediaView>
+                    <RelativeContentContainer>
+                        <ImageViewContaier>
+                            <ImagesWrapper>
+                                <div>
+                                    <Images>
+                                        {this.state.images.map((imageUrl, i) => {
+                                            return  (
+                                                <SlideImageContainer>
+                                                    <ImageFormat onClick={() => this.changeZoom()} zoomed={this.state.zoomed}>
+                                                        <img src={imageUrl} key={imageUrl + i} />
+                                                    </ImageFormat>
+                                                </SlideImageContainer>
+                                            )
+                                        })}
+                                    </Images>
+                                </div>
+                            </ImagesWrapper>
+                        </ImageViewContaier>
+                    </RelativeContentContainer>
                 </CarouselWrapper>
             </CarouselModal>
         );
