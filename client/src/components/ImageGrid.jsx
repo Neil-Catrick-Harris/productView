@@ -4,7 +4,8 @@ import ImageCarousel from './Imagecarousel.jsx';
 
 const GridWrapper = styles.imageGridWrapper;
 const Image = styles.image;
-
+const Container = styles.imageGridContainer;
+const ImageContainer = styles.imageContainer;
 class ImageGrid extends React.Component {
 
     constructor(props) {
@@ -25,13 +26,19 @@ class ImageGrid extends React.Component {
     }
     render() {
         return (
-            <GridWrapper>
-                    {this.state.imageUrls.map((url, index) => {
-                        if (index > 5) return;
-                        return <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
-                    })}
-                {this.state.clicked && <ImageCarousel handleClose={this.handleClose.bind(this)} images={this.state.imageUrls} />}
-            </GridWrapper>
+            <Container gridArea="imageGrid">
+                <GridWrapper >
+                        {this.state.imageUrls.map((url, index) => {
+                            if (index > 5) return;
+                            return (
+                            <ImageContainer>
+                                <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
+                            </ImageContainer>
+                            )
+                        })}
+                    {this.state.clicked && <ImageCarousel handleClose={this.handleClose.bind(this)} images={this.state.imageUrls} />}
+                </GridWrapper>
+            </Container>
         );
     }
 };

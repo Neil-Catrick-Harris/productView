@@ -8,7 +8,6 @@ import Sizes from './components/Sizes.jsx';
 import styles from './styled.js';
 
 const ModuleContainer  = styles.ModuleContainer;
-const ImageGridContainer = styles.imageGridContainer;
 class Service extends React.Component {
     constructor(props) {
         super(props);
@@ -43,9 +42,7 @@ class Service extends React.Component {
                 <GlobalStyle modalShowing={this.state.showModal}/>
                 {this.state.productDetails ?
                 <Fragment>
-                    <ImageGridContainer>
-                        <ImageGrid className="imageGrid" images ={this.state.productDetails.imageUrls}/>
-                    </ImageGridContainer>
+                    <ImageGrid images ={this.state.productDetails.imageUrls}/>
                     <ProductDetails bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} product={this.state.productDetails}/>
                     <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
                 </Fragment> 
