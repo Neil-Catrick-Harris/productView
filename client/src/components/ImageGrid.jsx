@@ -6,11 +6,12 @@ const GridWrapper = styles.imageGridWrapper;
 const Image = styles.image;
 const Container = styles.imageGridContainer;
 const ImageContainer = styles.imageContainer;
+const ImageWrapper = styles.imageWrapper;
 class ImageGrid extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { imageUrls: [] };
+        this.state = { imageUrls: [], clicked: false};
         this.handleImageClick.bind(this);
     }
 
@@ -21,8 +22,11 @@ class ImageGrid extends React.Component {
     handleClose() {
         this.setState({clicked: !this.state.clicked});
     }
-    handleImageClick() {
-        this.setState({clicked: !this.state.clicked});
+    handleImageClick(e) {
+        this.setState({
+            clicked: !this.state.clicked,
+            imageClicked: parseInt(e.currentTarget.id)
+        })
     }
     render() {
         return (
@@ -31,12 +35,14 @@ class ImageGrid extends React.Component {
                         {this.state.imageUrls.map((url, index) => {
                             if (index > 5) return;
                             return (
-                            <ImageContainer>
-                                <Image onClick={() => this.handleImageClick()} index={index + 1} src={url} key={url + index}/>
-                            </ImageContainer>
+                                <ImageWrapper onClick={(e) => this.handleImageClick(e)} id={index}>
+                                    <ImageContainer>
+                                        <Image src={url} key={url + index}/>
+                                    </ImageContainer>
+                                </ImageWrapper>
                             )
                         })}
-                    {this.state.clicked && <ImageCarousel handleClose={this.handleClose.bind(this)} images={this.state.imageUrls} />}
+                    {this.state.clicked && <ImageCarousel imageClicked={this.state.imageClicked} handleClose={this.handleClose.bind(this)} images={this.state.imageUrls} />}
                 </GridWrapper>
             </Container>
         );

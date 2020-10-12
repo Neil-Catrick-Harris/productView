@@ -5,7 +5,11 @@ const ExitPane = styles.modalStyles.ExitPane;
 const ButtonContainer = styles.modalStyles.iconContainer;
 const Icon = styles.productDetailListing.icon;
 const CarouselWrapper = styles.modalStyles.Content;
-const NavButton = styles.modalStyles.button;
+const NavButton = Styled(styles.modalStyles.button)`
+    color: #111;
+    top: 25%;
+    ${(props) => props.left ? "left: 0" : "right: 0"};
+`;
 const RelativeContentContainer = Styled(CarouselWrapper)`
     position: relative;
 `;
@@ -27,13 +31,17 @@ const ImagesWrapper = Styled(CarouselWrapper)`
     overflow-x: scroll;
     overflow-y: hidden;
     position: relative;
-    padding: .3rem;
     scroll-snap-type: x mandatory;
     top: 0;
+    padding-left: 0;
+    
 `;
-const ImageFormat = styles.modalStyles.ImageFormat;
-const Images = styles.modalStyles.slidesBody;
-const SlideImageContainer = styles.modalStyles.slideContainer;
+const SlideWrapper = styles.modalStyles.slideWrapper;
+const Slide = styles.modalStyles.slide;
+const SlidesContainer = styles.modalStyles.slideContainer;
+const ScrollButtonView = styles.modalStyles.scrollButton;
+const ScrollButtonContainer = styles.modalStyles.ScrollButtonContainer;
+const ScrollButtonHighLight = styles.modalStyles.scrollButtonHighlight;
 class ImageCarousel extends React.Component {
     constructor(props) {
         super(props);
@@ -43,7 +51,7 @@ class ImageCarousel extends React.Component {
         this.setState({
             images: this.props.images,
             numOfImages: this.props.images.length,
-            currentImage: Math.floor(this.props.images.length / 2)
+            currentImage: this.props.imageClicked
         })
     }
     viewPrevious() {
@@ -53,6 +61,17 @@ class ImageCarousel extends React.Component {
     viewNext() {
         if (this.state.currentImage === this.state.numOfImages - 1) return;
         this.setState({currentImage: this.state.currentImage + 1})
+    }
+    changeImage(e, move) {
+        if (this.state.currentImage >= 0 && this.state.currentImage < this.state.numOfImages) {
+            if (move > 0) {
+                e.currentTarget.previousElementSibling.firstElementChild.children[this.state.currentImage + move].scrollIntoView({behavior: 'smooth'})
+            } else {
+                e.currentTarget.nextElementSibling.firstElementChild.children[this.state.currentImage + move].scrollIntoView({behavior: 'smooth'});
+            }
+            let index = this.state.currentImage + move;
+            this.setState({currentImage: index})
+        }
     }
     changeZoom() { 
         this.setState({zoomed: !this.state.zoomed});
@@ -68,24 +87,37 @@ class ImageCarousel extends React.Component {
                     </ButtonContainer>
                 </ExitPane>
                 <CarouselWrapper>
-                    <RelativeContentContainer>
-                        <ImageViewContaier>
+                   <RelativeContentContainer>
+                       <ImageViewContaier>
+                            <NavButton left onClick={(e) => this.changeImage(e, -1)} >
+                                <Icon viewBox="0 0 24 24">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 12.0006L15.0012 3.99992L16.4154 5.41417L9.82838 12.0008L16.4143 18.5876L15 20.0017L7 12.0006Z" />
+                                </Icon>
+                            </NavButton>
                             <ImagesWrapper>
-                                <div>
-                                    <Images>
-                                        {this.state.images.map((imageUrl, i) => {
-                                            return  (
-                                                <SlideImageContainer>
-                                                    <ImageFormat onClick={() => this.changeZoom()} zoomed={this.state.zoomed}>
-                                                        <img src={imageUrl} key={imageUrl + i} />
-                                                    </ImageFormat>
-                                                </SlideImageContainer>
-                                            )
-                                        })}
-                                    </Images>
-                                </div>
+                                <SlidesContainer id="carouselList">
+                                    {this.state.images.map((url, i) => {
+                                        return (
+                                            <SlideWrapper>
+                                                <Slide>
+                                                    <img src={url}></img>
+                                                </Slide>
+                                            </SlideWrapper>
+                                        )
+                                    })}
+                                </SlidesContainer>
                             </ImagesWrapper>
+                            <NavButton right  onClick={(e) => this.changeImage(e, 1)} >
+                                <Icon viewBox="0 0 24 24">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M16.4153 12.0003L8.41407 20.0011L6.9999 18.5868L13.5869 12.0002L7.00097 5.41339L8.41528 3.99927L16.4153 12.0003Z" />
+                                </Icon>
+                            </NavButton>
                         </ImageViewContaier>
+                        <ScrollButtonView>
+                            <ScrollButtonContainer>
+                                <ScrollButtonHighLight></ScrollButtonHighLight>
+                            </ScrollButtonContainer>
+                        </ScrollButtonView>
                     </RelativeContentContainer>
                 </CarouselWrapper>
             </CarouselModal>
