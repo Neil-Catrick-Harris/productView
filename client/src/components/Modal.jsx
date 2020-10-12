@@ -13,19 +13,17 @@ const IconWithEffect = Styled(Icon)`
     position: relative;
     horizontal-align: right;
 `;
-const View = Styled.div`
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: #fff;
-    z-index: 9001;
-    overflow: hidden;
-    flex-shrink: 0;
-    text-align: left;
-    flex-direction: column;
-    width: 21.25rem;
+const View = Styled(styles.modalStyles.View)`
+    animation: show .25s;
+    transform: scale(1);
+    }
+    @keyframes show {
+        0% { right: -20%;}
+        25% {right: -15% }
+        50%{ right : -10%}
+        75% {right: -5%}
+        100%{ right: 0;}
+    }
 `;
 
 const ExitPane = Styled.div`

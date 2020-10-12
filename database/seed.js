@@ -33,9 +33,30 @@ let sizes = () => {
 let images = (function() {
     let imagesArr = [];
     let count = Math.floor(Math.random() * 15 + 6);
+    let links = [
+        "http://placeimg.com/640/480/fashion",
+        "http://placeimg.com/640/480/abstract",
+        "http://placeimg.com/640/480/animals",
+        "http://placeimg.com/640/480/business",
+        "http://placeimg.com/640/480/cats",
+        "http://placeimg.com/640/480/city",
+        "http://placeimg.com/640/480/food",
+        "http://placeimg.com/640/480/nightlife",
+        "http://placeimg.com/640/480/fashion",
+        "http://placeimg.com/640/480/nature",
+        "http://placeimg.com/640/480/fashion",
+        "http://placeimg.com/640/480/abstract",
+        "http://placeimg.com/640/480/animals",
+        "http://placeimg.com/640/480/business",
+        "http://placeimg.com/640/480/cats",
+        "http://placeimg.com/640/480/city",
+        "http://placeimg.com/640/480/food",
+        "http://placeimg.com/640/480/nightlife",
+        "http://placeimg.com/640/480/fashion",
+        "http://placeimg.com/640/480/nature"
+    ];
     for (i = 0; i < count; i++) {
-        let imageUrl = faker.image.fashion();
-        imagesArr.push(imageUrl);
+        imagesArr.push(links[i]);
     }
 
     return imagesArr;

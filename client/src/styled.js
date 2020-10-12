@@ -12,12 +12,18 @@ const styles = {
             grid-template-columns: repeat(2, minmax(200px, 1fr));
         `,
     image: Styled.img`
-        max-height: 200px;
-        max-width: 100%;
         object-fit: cover;
+        width: 100%;
+        height: 100%;
         `,
     imageContainer: Styled.div`
-        padding: 3px;
+        cursor: pointer;
+    `,
+    imageWrapper: Styled.div`
+        flex: none;
+        margin-left: .625rem;
+        margin-right: .625rem;
+        margin-bottom: 1.25rem;
     `,
     ModuleContainer: Styled.div`
         display: grid;
@@ -38,6 +44,7 @@ const styles = {
             border: 0;
             cursor: pointer;
             padding: 1.25rem 0;
+            padding-left: 20px;
             width: 100%;
             align-items: center;
             color: #484848;
@@ -65,8 +72,6 @@ const styles = {
             line-height: 1.42857;
         `,
         content: Styled.div`
-            padding-top: 1.5rem;
-            padding-bottom: 4rem;
             height: auto;
             opacity: 1;
         `,
@@ -80,14 +85,11 @@ const styles = {
             transition-timing-function: ease
         `,
         entries: Styled.div`
-            padding-top: 1.5rem;
-            padding-bottom: 4rem;
             height: auto;
             opacity: 1;
         `,
         items: Styled.div`
             margin-bottom: 0;
-            margin: 1.875rem 0;
         `,
         entry: Styled.span`
             display: block;
@@ -120,7 +122,7 @@ const styles = {
             flex-shrink: 0;
             text-align: left;
             flex-direction: column;
-            width: 21.25rem;
+            width: 31.25rem;
         `,
         imageViewContainer: Styled.div`
             bottom: auto;
@@ -145,10 +147,16 @@ const styles = {
         exitBtn: Styled.button`
             position: relative;
             display: inline-flex;
+            text-decoration: none;
+            -webkit-box-pack: center;
             justify-content: center;
             align-items: center;
             border: 0;
+            line-height: 1.42857;
             padding: 0;
+            -o-transition-duration: .1s;
+            transition-duration: .1s;
+            transition-timing-function: cubic-bezier(.4,0,.4,1);
             cursor: pointer;
             box-sizing: border-box;
             background: transparent;
@@ -156,7 +164,7 @@ const styles = {
             vertical-align: top;
         `,
         Content: Styled.div`
-            padding: 1.87rem 1.87rem 3.125rem;
+            padding: 0;
             overflow: auto;
             height: 100%;
         `,
@@ -164,47 +172,73 @@ const styles = {
             display: block;
             position: absolute;
             top: 50%;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity .2s,visibility 0ms .2s;
             cursor: pointer;
             z-index: 1;
-            transform: translateY(-50%);
             justify-content: center;
             align-items: center;
             text-align: center;
             border: 0;
             padding: 0;
             box-sizing: border-box;
-            background: transparent;
             border-radius: 52px;
-            vertical-align: top;
             color: #111;
-            left: 1.875rem;
         `,
-        slidesBody: Styled.div`
-            display: flex;
-            flex-wrap: nopwrap;
-            align-items: center;
-        `,
-        slideContainer: Styled.div`
-            max-width: 100%;
-            position: relative;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: block;
-            padding-left: 6.25rem;
-            padding-right: 6.25rem;
-        `,
-        ImageFormat: Styled.div`
-            cursor: zoom-in;
-            background-repeat: no-repeat;
-            background-size: ${(props) => props.zoomed ? '200%' : '100%'};
-            will-change: background-position;
+        slide: Styled.div`
             max-height: 75vh;
             max-width: 100%;
             display: inline-block;
-            background-position: 51.5314% 60.8527%;
+            cursor: zoom-in;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            will-change: background-position;
+        `,
+        slideContainer: Styled.ul`
+            align-items: center;
+            display: flex;
+            flex-wrap: nowrap;
+        `,
+        slideWrapper: Styled.li`
+            position: relative;
+            margin-right: 0;
+            margin-left: 0;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding-left: 6.25rem;
+            padding-right: 6.25rem;
+            flex-shrink: 0;
+        `,
+        slideImage: Styled.div`
+        background: 20
+        `,
+        scrollButton: Styled.button`
+            height: 1.375rem;
+            position: relative;
+            width: 100%;
+            outline: none;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            display: block;
+        `,
+        ScrollButtonContainer: Styled.span`
+                width: 100%;
+                background: #dfdfdf;
+                transform: translateX(0);
+                height: .12rem;
+                display: block;
+        `,
+        scrollButtonHighlight: Styled.span`
+            will-change: transform;
+            background: #111;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            transform-origin: 0 0;
+            display: block;
         `
     }
 };

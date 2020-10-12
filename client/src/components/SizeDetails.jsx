@@ -54,7 +54,7 @@ const SizeDetails = (props) => {
         ProductDetails.push((
             <ListItemContainer>
                 <DescriptionTag>{attr}:&nbsp;</DescriptionTag>
-                <dd>{measurment}</dd>
+                <span>{measurment}</span>
             </ListItemContainer>
         ));
     }
