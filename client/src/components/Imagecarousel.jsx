@@ -55,7 +55,7 @@ class ImageCarousel extends React.Component {
         this.setState({
             images: this.props.images,
             numOfImages: this.props.images.length,
-            currentImage: this.props.imageClicked
+            currentImage: 0
         })
     }
     viewPrevious() {
