@@ -72,8 +72,6 @@ const styles = {
             line-height: 1.42857;
         `,
         content: Styled.div`
-            padding-top: 1.5rem;
-            padding-bottom: 4rem;
             height: auto;
             opacity: 1;
         `,
@@ -87,14 +85,11 @@ const styles = {
             transition-timing-function: ease
         `,
         entries: Styled.div`
-            padding-top: 1.5rem;
-            padding-bottom: 4rem;
             height: auto;
             opacity: 1;
         `,
         items: Styled.div`
             margin-bottom: 0;
-            margin: 1.875rem 0;
         `,
         entry: Styled.span`
             display: block;
@@ -127,7 +122,7 @@ const styles = {
             flex-shrink: 0;
             text-align: left;
             flex-direction: column;
-            width: 21.25rem;
+            width: 31.25rem;
         `,
         imageViewContainer: Styled.div`
             bottom: auto;

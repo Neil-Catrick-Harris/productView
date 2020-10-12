@@ -44,7 +44,7 @@ class Service extends React.Component {
                 <Fragment>
                     <ImageGrid images ={this.state.productDetails.imageUrls}/>
                     <ProductDetails bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} product={this.state.productDetails}/>
-                    <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes}/>
+                    <Sizes bodyClicked={this.state.showModal} showModal={this.handleClick.bind(this)} sizes={this.state.productDetails.sizes} image={this.state.productDetails.imageUrls[0]}/>
                 </Fragment> 
                 : <div>Loading images...</div>}
             </ModuleContainer>

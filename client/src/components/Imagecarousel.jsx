@@ -17,7 +17,11 @@ const ImageViewContaier = styles.modalStyles.imageViewContainer;
 const CarouselModal = Styled(styles.modalStyles.View)`
     width: 100%;
     max-width: none;
-    animation: slideUp .3s ease forwards;
+    animation: slideUp .5s ease forwards;
+    @keyframes slideUp {
+       0% { transform: translateY(100%); }
+       100% { transform: translateY(0); }
+    }
 `;
 const ExitButton = Styled(Icon)`
     &:hover {
