@@ -7,7 +7,7 @@ const Icon = styles.productDetailListing.icon;
 const CarouselWrapper = styles.modalStyles.Content;
 const NavButton = Styled(styles.modalStyles.button)`
     color: #111;
-    top: 25%;
+    top: 25rem;
     ${(props) => props.left ? "left: 0" : "right: 0"};
 `;
 const RelativeContentContainer = Styled(CarouselWrapper)`
@@ -36,7 +36,7 @@ const ImagesWrapper = Styled(CarouselWrapper)`
     overflow-y: hidden;
     position: relative;
     scroll-snap-type: x mandatory;
-    top: 0;
+    padding-top: 10rem;
     padding-left: 0;
     
 `;
@@ -117,11 +117,6 @@ class ImageCarousel extends React.Component {
                                 </Icon>
                             </NavButton>
                         </ImageViewContaier>
-                        <ScrollButtonView>
-                            <ScrollButtonContainer>
-                                <ScrollButtonHighLight></ScrollButtonHighLight>
-                            </ScrollButtonContainer>
-                        </ScrollButtonView>
                     </RelativeContentContainer>
                 </CarouselWrapper>
             </CarouselModal>
