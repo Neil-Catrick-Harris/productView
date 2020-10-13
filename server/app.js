@@ -31,8 +31,19 @@ app.post('/api/productView/addProduct', (req, res) => {
       });
 });
 
-// app.put();
+app.put('/api/productView/editProductById', (req, res) => {
+    let productInfo = req.body;
+    let filter = { id: productInfo.id };
+    // find product if exists--get mongoose _id
+    db.findOneAndUpdate(filter, productInfo, { new: true })
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => res.send(400));
+});
 
-// app.delete();
+app.delete('/api/productView/deleteProductById', (req, res) => {
+
+});
 
 module.exports = app;
