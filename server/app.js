@@ -19,6 +19,20 @@ app.get('/api/productView/products/:id', (req, res) => {
         console.error(err);
         res.end();
     })
-})
+});
+
+app.post('/api/productView/addProduct', (req, res) => {
+    db.create(req.body)
+      .then(response => {
+          res.send(200);
+      })
+      .catch(err => {
+          res.send(400);
+      });
+});
+
+// app.put();
+
+// app.delete();
 
 module.exports = app;
