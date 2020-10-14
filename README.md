@@ -1,14 +1,14 @@
 # productView
-SETUP:
-1: NPM install dependencies
-2: Seed database: npm run seed:db -> should result in 100 records inserted
-3: start server: npm start
-4: Build client pack: npm run build
+## SETUP:
+<br />1: NPM install dependencies
+<br />2: Seed database: npm run seed:db -> should result in 100 records inserted
+<br />3: start server: npm start
+<br />4: Build client pack: npm run build
 
-CRUD Endpoints implemented by Ahmed Elawad
+## CRUD Endpoints implemented by Ahmed Elawad
 - Read: (GET): `/api/productView/products/:id`
 
-CRUD Endpoints: Added/Modified by Turner Kraus
+## CRUD Endpoints: Added/Modified by Turner Kraus
 - Read: (GET): `/api/productView/products/:id`
   - `:id` can be either the product ID (default is #1-100) OR `all` (responds with entire database)
   - e.g. GET request to `/api/productView/products/2` sends product information for product with `id = 2`
