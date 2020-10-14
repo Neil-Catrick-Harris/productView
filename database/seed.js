@@ -63,8 +63,10 @@ let images = (function() {
 });
 
 const seedDb = function() {
+    let startTime = new Date();
+    let numRecords = 100;
     let dataArray = [];
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= numRecords; i++) {
         let productDetails = {
             name: faker.commerce.productName(),
             id: i,
@@ -79,17 +81,32 @@ const seedDb = function() {
 
             imageUrls: images()
         };
-        dataArray.push(productDetails);
+        // dataArray.push(productDetails);
+        db.create(productDetails)
+          .then(data => {
+              if (i === numRecords) {
+                  const endTime = new Date();
+                  console.log(`${numRecords} records successfully inserted in ${endTime - startTime} milliseconds`);
+                  db.db.close( () => console.log('Connection closed'));
+              }
+          })
+          .catch(err => {
+              console.error(err);
+          });
     };
 
-    db.create(dataArray)
-        .then( (data) => {
-            console.log(`${data.length} records succesfully inserted.`);
-            db.db.close( () => console.log('Connection closed'));
-        })
-        .catch( (err) => {
-            console.error(err);
-        })
+    // db.create(dataArray)
+    //     .then( (data) => {
+    //         let endTime = new Date();
+    //         console.log(`${data.length} records succesfully inserted in ${endTime - startTime} milliseconds`);
+    //         db.db.close( () => console.log('Connection closed'));
+    //     })
+    //     .catch( (err) => {
+    //         console.error(err);
+    //     })
 };
 
-db.deleteMany({}, seedDb);
+db.deleteMany({}, () => {
+    console.log('database has been cleared and will be re-seeded');
+    seedDb();
+});
