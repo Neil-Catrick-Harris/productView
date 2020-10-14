@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const db = require('../database/index.js');
 
@@ -28,6 +29,10 @@ app.get('/api/productView/products/:id', (req, res) => {
                 res.end();
             });
     }
+});
+
+app.get('/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
 });
 
 app.post('/api/productView/addProduct', (req, res) => {
