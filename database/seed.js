@@ -76,7 +76,7 @@ const seedDb = function() {
             packaging: packaging(),
             sizes: sizes(),
 
-         
+
             imageUrls: images()
         };
         dataArray.push(productDetails);
@@ -91,4 +91,5 @@ const seedDb = function() {
             console.error(err);
         })
 };
-seedDb();
+
+db.deleteMany({}, seedDb);
