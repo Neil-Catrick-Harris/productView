@@ -11,14 +11,23 @@ app.use('/*', (req,res, next) => {
 });
 
 app.get('/api/productView/products/:id', (req, res) => {
-    db.find({id: req.params.id})
-    .then((resp) => {
-        res.json(resp)
-    })
-    .catch((err) => {
-        console.error(err);
-        res.end();
-    })
+    if (req.params.id === 'all') {
+        db.find()
+            .then((response) => {res.json(response)})
+            .catch((err) => {
+                console.error(err);
+                res.end(400);
+            });
+    } else {
+        db.find({id: req.params.id})
+            .then((resp) => {
+                res.json(resp)
+            })
+            .catch((err) => {
+                console.error(err);
+                res.end();
+            });
+    }
 });
 
 app.post('/api/productView/addProduct', (req, res) => {
@@ -31,9 +40,9 @@ app.post('/api/productView/addProduct', (req, res) => {
       });
 });
 
-app.put('/api/productView/editProductById', (req, res) => {
+app.put('/api/productView/editProductById/:id', (req, res) => {
     let productInfo = req.body;
-    let filter = { id: productInfo.id };
+    let filter = { id: req.params.id };
     // find product if exists--get mongoose _id
     db.findOneAndUpdate(filter, productInfo, { new: true })
       .then(result => {
@@ -42,8 +51,10 @@ app.put('/api/productView/editProductById', (req, res) => {
       .catch(err => res.send(400));
 });
 
-app.delete('/api/productView/deleteProductById', (req, res) => {
-
+app.delete('/api/productView/deleteProductById/:id', (req, res) => {
+    db.deleteOne({ id: req.params.id })
+      .then(result => res.json(result))
+      .catch(err => res.send(400));
 });
 
 module.exports = app;
