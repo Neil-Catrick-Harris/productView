@@ -1,7 +1,7 @@
 // This router is designed to work with promises to seed mongo, postgres, or cassandra databases
 // It assumes you are using promises
 
-let MongoItem;
+let MongoItem, PostgresItem, CassandraItem;
 
 const defaultCB = () => {};
 
@@ -24,23 +24,43 @@ const mongo = {
   },
 };
 
-const postgres = {};
-//   addOne: (record, cb = defaultCB)=> {
-
-//   },
-//   addMany: (records, cb = defaultCB)=> {
-
-//   },
-//   deleteAll: (cb = defaultCB)=> {
-
-//   },
-//   connect: (cb = defaultCB)=> {
-
-//   },
-//   disconnect: (cb = defaultCB)=> {
-
-//   },
-// };
+const postgres = {
+  connection: PostgresItem,
+  addOne: (record)=> {
+    return new Promise((res, rej) => {
+      let keyString = 'INSERT INTO items (';
+      let valString = 'VALUES (';
+      for (let key in record) {
+        keyString += key + ', ';
+        valString += JSON.stringify(record[key]) + ', ';
+      }
+      let thisQuery = `${keyString.slice(0, -2)}) ${valString.slice(0, -2)});`
+      res(PostgresItem.query(thisQuery));
+    })
+  },
+  addMany: (records)=> {
+    return new Promise((res, rej) => {
+      let keyString = 'INSERT INTO items (';
+      let valString = 'VALUES (';
+      for (let key in records[0]) {
+        keyString += key + ', ';
+      }
+      records.forEach(record => {
+        valString
+      })
+      res(PostgresItem.query(thisQuery));
+    });
+  },
+  deleteAll: ()=> {
+    return new Promise((res, rej) => res());
+  },
+  connect: ()=> {
+    return new Promise((res, rej) => res(PostgresItem = require('./postgres.js')));
+  },
+  disconnect: () => {
+    return new Promise((res, rej) => res(PostgresItem.end()));
+  },
+};
 
 const cassandra = {};
 //   addOne: (record, cb = defaultCB)=> {
