@@ -30,7 +30,7 @@ let getSizes = () => {
 
 let getImages = () => {
     let imagesArr = [];
-    let count = 6 + Math.floor(Math.random() * 2);
+    let count = 6 + Math.floor(Math.random() * 5);
     let categories = [
         "fashion",
         "nature",
@@ -62,35 +62,32 @@ const generateRecord = (i) => {
     };
 };
 
-const addToDb = (record, isLastRecord) => {
-    return db.create(record)
-        .catch(err => {
-        console.error(err);
-    });
-};
-
-addLastToDb = (record, startTime) => {
-    return db.create(record)
-      .then(data => {
-          const endTime = new Date();
-          console.log(`done adding records to the db in ${endTime - startTime} milliseconds`);
-          db.db.close(() => console.log('Connection closed'));
-      });
-}
-
 const seedDb = async () => {
     const startTime = new Date();
-    const numRecords = 100;
-    for (let i = 1; i <= numRecords; i++) {
-        if (i === numRecords) {
-            addLastToDb(generateRecord(i), startTime)
-        } else {
-            addToDb(generateRecord(i));
-        }
-    };
+    const numRecords = 10000;
+    const groups = 10;
+    let counter = 1;
+    for (let i = 1; i <= groups; i++) {
+        let records = [];
+        while (records.length < numRecords / groups) {
+            records.push(generateRecord(counter));
+            counter++;
+        };
+        insertRecords(records, () => {
+            if (i === groups) {
+                db.db.close();
+                console.log(`done adding records in ${new Date() - startTime} ms`);
+            }
+        });
+    }
+    console.log(`done generating records in ${new Date() - startTime} milliseconds`)
 };
 
 db.deleteMany({}, () => {
     console.log('database has been cleared and will be re-seeded');
     seedDb();
 });
+
+const insertRecords = (records, cb) => {
+    db.insertMany(records, cb);
+};
