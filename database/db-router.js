@@ -1,60 +1,63 @@
+// This router is designed to work with promises to seed mongo, postgres, or cassandra databases
+// It assumes you are using promises
+
 let MongoItem;
 
-export const mongo = {
+const defaultCB = () => {};
+
+const mongo = {
   connection: MongoItem,
-  addOne: (record, cb)=> {
-    MongoItem.create(record);
-    cb();
+  addOne: (record)=> {
+    return new Promise((res, rej) => res(MongoItem.create(record)));
   },
-  addMany: (records, cb)=> {
-    MongoItem.insertMany(records);
-    cb();
+  addMany: (records)=> {
+    return new Promise((res, rej) => res(MongoItem.insertMany(records)));
   },
-  deleteAll: (cb)=> {
-    MongoItem.deleteMany({}, cb);
+  deleteAll: ()=> {
+    return new Promise((res, rej) => res(MongoItem.deleteMany({})));
   },
-  connect: (cb)=> {
-    MongoItem = require('./index.js');
-    cb();
+  connect: ()=> {
+    return new Promise((res, rej) => res(MongoItem = require('./index.js')));
   },
-  disconnect: (cb) => {
-    MongoItem.db.close(cb);
+  disconnect: () => {
+    return new Promise((res, rej) => res(MongoItem.db.close()));
   },
 };
 
-export const postgres = {
-  addOne: (record, cb)=> {
+const postgres = {};
+//   addOne: (record, cb = defaultCB)=> {
 
-  },
-  addMany: (records, cb)=> {
+//   },
+//   addMany: (records, cb = defaultCB)=> {
 
-  },
-  deleteAll: (cb)=> {
+//   },
+//   deleteAll: (cb = defaultCB)=> {
 
-  },
-  connect: (cb)=> {
+//   },
+//   connect: (cb = defaultCB)=> {
 
-  },
-  disconnect: (cb)=> {
+//   },
+//   disconnect: (cb = defaultCB)=> {
 
-  },
-};
+//   },
+// };
 
-export const postgres = {
-  addOne: (record, cb)=> {
+const cassandra = {};
+//   addOne: (record, cb = defaultCB)=> {
 
-  },
-  addMany: (records, cb)=> {
+//   },
+//   addMany: (records, cb = defaultCB)=> {
 
-  },
-  deleteAll: (cb)=> {
+//   },
+//   deleteAll: (cb = defaultCB)=> {
 
-  },
-  connect: (cb)=> {
+//   },
+//   connect: (cb = defaultCB)=> {
 
-  },
-  disconnect: (cb)=> {
+//   },
+//   disconnect: (cb = defaultCB)=> {
 
-  },
-};
+//   },
+// };
 
+module.exports = { mongo, postgres, cassandra };
