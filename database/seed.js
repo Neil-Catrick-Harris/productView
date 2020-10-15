@@ -1,5 +1,6 @@
 const faker = require('faker');
-const db = require('./index.js');
+const AllDbs = require('./db-router.js');
+const db = AllDbs.mongo;
 
 let packaging = () => {
     let details = {
@@ -76,19 +77,23 @@ const seedDb = function() {
             packaging: packaging(),
             sizes: sizes(),
 
-         
+
             imageUrls: images()
         };
         dataArray.push(productDetails);
     };
 
-    db.create(dataArray)
+    db.addMany(dataArray)
         .then( (data) => {
             console.log(`${data.length} records succesfully inserted.`);
-            db.db.close( () => console.log('Connection closed'));
+            db.disconnect().then(() => console.log('Connection closed'));
         })
         .catch( (err) => {
             console.error(err);
         })
 };
-seedDb();
+db.connect()
+    .then(() => {
+        console.log('connected to db');
+        seedDb();
+    });
