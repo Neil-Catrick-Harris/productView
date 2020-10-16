@@ -22,6 +22,9 @@ const mongo = {
   disconnect: () => {
     return new Promise((res, rej) => res(MongoItem.db.close()));
   },
+  getOne: (id) => {
+    return MongoItem.find({ id });
+  },
 };
 
 const postgres = {
@@ -47,6 +50,9 @@ const postgres = {
   disconnect: () => {
     return new Promise((res, rej) => res());
   },
+  getOne: (id) => {
+    return PostgresItem.findOne({ where: { id }});
+  }
 };
 
 const cassandra = {};
