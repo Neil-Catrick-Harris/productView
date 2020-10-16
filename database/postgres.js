@@ -1,40 +1,57 @@
-const { Client } = require('pg');
+const { Sequelize, DataTypes } = require('sequelize');
 
-const client = new Client({
-  user: 'productview',
+const sequelize = new Sequelize('productviewdb', 'productview','pineapple', {
   host: 'localhost',
-  database: 'productviewdb',
-  password: 'pineapple',
-  port: 5432,
+  dialect: 'postgres',
+  logging: false
 });
 
-const itemsSetup = `
-CREATE TABLE items (
-  id serial NOT NULL PRIMARY KEY,
-  name varchar,
-  description varchar,
-  articleNumber varchar,
-  details varchar,
-  materials varchar,
-  sustainibility varchar,
-  packaging json,
-  sizes json,
-  imageUrls json
-  );
-`;
+const Product = sequelize.define('item',{
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  articleNumber: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  details: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  materials: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  sustainibility: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  packaging: {
+    type: DataTypes.JSON,
+    allowNull: false
+  },
+  sizes: {
+    type: DataTypes.JSON,
+    allowNull: false
+  },
+  imageUrls: {
+    type: DataTypes.JSON,
+    allowNull: false
+  }
+});
 
-// const initialize = () => {
-//   client.connect();
-//   client.query('DROP TABLE IF EXISTS items')
-//   .then(() => {
-//     console.log('Table has been dropped');
-//     client.query(itemsSetup)
-//       .then(res => console.log('Table has been created'))
-//       .catch(err => console.error(err))
-//       // .finally(() => client.end());
-//   });
-// };
+const shutdownPostgres = sequelize.close;
 
-client.connect();
+module.exports = { Product, shutdownPostgres };
 
-module.exports = client;
