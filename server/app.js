@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const db = require('../database/index.js');
+// const db = require('../database/index.js');
+const {mongo, postgres, cassandra} = require('../database/db-router.js');
+const db = mongo;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -33,16 +35,33 @@ app.get('/api/productView/products/:id', (req, res) => {
 
 app.get('/:id', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+    db.connect()
+    .then(() => db.getOne(req.params.id))
+    .then((resp) => {
+        res.json(resp);
+    })
+    .catch((err) => {
+        console.error(err);
+    })
+    .finally(() => {
+        res.end();
+        db.disconnect();
+    });
 });
 
 app.post('/api/productView/addProduct', (req, res) => {
-    db.create(req.body)
-      .then(response => {
-          res.send(200);
-      })
-      .catch(err => {
-          res.send(400);
-      });
+    db.connect()
+    .then(() => db.addOne(req.body))
+    .then(response => {
+        res.send(200);
+    })
+    .catch(err => {
+        res.send(400);
+    })
+    .finally(() => {
+        res.end();
+        db.disconnect();
+    })
 });
 
 app.put('/api/productView/editProductById/:id', (req, res) => {
