@@ -23,7 +23,7 @@ const mongo = {
     return new Promise((res, rej) => res(MongoItem.db.close()));
   },
   getOne: (id) => {
-    return new Promise((res, rej) => res(MongoItem.find({ id: parseInt(id) })));
+    return MongoItem.find({ id });
   },
 };
 
