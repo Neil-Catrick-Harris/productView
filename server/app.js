@@ -42,6 +42,7 @@ app.get('/:id', (req, res) => {
     })
     .catch((err) => {
         console.error(err);
+        res.send(400);
     })
     .finally(() => {
         res.end();
