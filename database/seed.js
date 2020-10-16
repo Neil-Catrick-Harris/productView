@@ -78,11 +78,6 @@ const seedDb = function() {
             sustainibility: faker.lorem.sentence(),
             packaging: packaging(),
             sizes: sizes(),
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 49b667b... db-router functional with mongoose actions
             imageUrls: images()
         };
         dataArray.push(productDetails);
@@ -90,11 +85,7 @@ const seedDb = function() {
 
     db.addMany(dataArray)
         .then( (data) => {
-<<<<<<< HEAD
             console.log(`${data.length} records succesfully inserted in ${new Date() - startTime} ms`);
-=======
-            console.log(`${data.length} records succesfully inserted.`);
->>>>>>> 49b667b... db-router functional with mongoose actions
             db.disconnect().then(() => console.log('Connection closed'));
         })
         .catch( (err) => {
@@ -102,11 +93,8 @@ const seedDb = function() {
         })
 };
 db.connect()
-<<<<<<< HEAD
     .then(() => db.deleteAll())
     .then(() => console.log('All records deleted from db'))
-=======
->>>>>>> 49b667b... db-router functional with mongoose actions
     .then(() => {
         console.log('connected to db');
         seedDb();
