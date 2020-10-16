@@ -1,4 +1,8 @@
 const faker = require('faker');
+const fs = require('fs');
+const csvWriter = require('csv-write-stream');
+const writer = csvWriter();
+const fastcsv = require('fast-csv');
 const db = require('./index.js');
 
 let getPackaging = () => {
@@ -56,31 +60,42 @@ const generateRecord = (i) => {
         description: faker.commerce.productDescription(),
         materials: faker.lorem.sentence(),
         sustainibility: faker.lorem.sentence(),
-        packaging: getPackaging(),
-        sizes: getSizes(),
+        packaging: JSON.stringify(getPackaging()),
+        sizes: JSON.stringify(getSizes()),
         imageUrls: getImages()
     };
 };
 
 const seedDb = async () => {
     const startTime = new Date();
-    const numRecords = 10000;
-    const groups = 10;
+    const numRecords = 1000000;
     let counter = 1;
-    for (let i = 1; i <= groups; i++) {
-        let records = [];
-        while (records.length < numRecords / groups) {
-            records.push(generateRecord(counter));
-            counter++;
-        };
-        insertRecords(records, () => {
-            if (i === groups) {
-                db.db.close();
-                console.log(`done adding records in ${new Date() - startTime} ms`);
-            }
-        });
+    writer.pipe(fs.createWriteStream('data.csv'));
+    for (let i = 1; i <= numRecords; i++) {
+        writer.write(generateRecord(counter));
+        counter++;
     }
-    console.log(`done generating records in ${new Date() - startTime} milliseconds`)
+    writer.end();
+    let stream = fs.createReadStream('data.csv');
+    let csvData = [];
+    let csvStream = fastcsv.parse()
+    .on('data', data => {
+            csvData.push({
+            name: data[0],
+            id: data[1],
+            description: data[2],
+            materials: data[3],
+            sustainibility: data[4],
+            packaging: data[5] === 'packaging' ? data[5] : JSON.parse(data[5]),
+            sizes: data[6] === 'sizes' ? data[6] : JSON.parse(data[6]),
+            imageUrls: data[7],
+    })})
+    .on('end', () => {
+        csvData.shift();
+        console.log(`done generating records in ${new Date() - startTime} milliseconds`);
+        insertRecords(csvData, () => console.log(`done seeding ${csvData.length} records in ${new Date() - startTime} milliseconds`));
+    });
+    stream.pipe(csvStream);
 };
 
 db.deleteMany({}, () => {
@@ -89,5 +104,11 @@ db.deleteMany({}, () => {
 });
 
 const insertRecords = (records, cb) => {
-    db.insertMany(records, cb);
+    db.insertMany(records, (err, res) => {
+        if (err) {
+            console.error(err);
+        }
+        cb();
+        db.db.close();
+    })
 };
