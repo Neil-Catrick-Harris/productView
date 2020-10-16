@@ -23,14 +23,14 @@ const mongo = {
     return new Promise((res, rej) => res(MongoItem.db.close()));
   },
   getOne: (id) => {
-    return MongoItem.find({ id });
+    return new Promise((res, rej) => res(MongoItem.find({ id: parseInt(id) })));
   },
 };
 
 const postgres = {
   connection: PostgresItem,
   addOne: (record)=> {
-    return new Promise((res, rej) => res(PostgresItem.create(record)));
+    return new Promise((res, rej) => res(PostgresItem.create(record[0])));
   },
   addMany: (records)=> {
     return new Promise((res, rej) => res(PostgresItem.bulkCreate(records)));
