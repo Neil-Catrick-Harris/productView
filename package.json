@@ -52,8 +52,10 @@
     "mongoose": "^5.10.7",
     "path": "^0.12.7",
     "pg": "^8.4.1",
+    "pg-hstore": "^2.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "sequelize": "^6.3.5",
     "styled-components": "^5.2.0"
   }
 }
