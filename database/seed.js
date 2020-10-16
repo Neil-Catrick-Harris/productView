@@ -1,6 +1,6 @@
 const faker = require('faker');
-const AllDbs = require('./db-router.js');
-const db = AllDbs.mongo;
+const {mongo, postgres, cassandra} = require('./db-router.js');
+const db = postgres;
 
 let packaging = () => {
     let details = {
@@ -65,7 +65,9 @@ let images = (function() {
 
 const seedDb = function() {
     let dataArray = [];
-    for (let i = 1; i <= 100; i++) {
+    const startTime = new Date();
+    const numRecords = 1 * 10**5;
+    for (let i = 1; i <= numRecords; i++) {
         let productDetails = {
             name: faker.commerce.productName(),
             id: i,
@@ -77,7 +79,6 @@ const seedDb = function() {
             packaging: packaging(),
             sizes: sizes(),
 
-
             imageUrls: images()
         };
         dataArray.push(productDetails);
@@ -85,7 +86,7 @@ const seedDb = function() {
 
     db.addMany(dataArray)
         .then( (data) => {
-            console.log(`${data.length} records succesfully inserted.`);
+            console.log(`${data.length} records succesfully inserted in ${new Date() - startTime} ms`);
             db.disconnect().then(() => console.log('Connection closed'));
         })
         .catch( (err) => {
@@ -93,6 +94,8 @@ const seedDb = function() {
         })
 };
 db.connect()
+    .then(() => db.deleteAll())
+    .then(() => console.log('All records deleted from db'))
     .then(() => {
         console.log('connected to db');
         seedDb();
