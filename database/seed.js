@@ -1,6 +1,6 @@
 const faker = require('faker');
 const {mongo, postgres, cassandra} = require('./db-router.js');
-const db = postgres;
+const db = mongo;
 
 let packaging = () => {
     let details = {
