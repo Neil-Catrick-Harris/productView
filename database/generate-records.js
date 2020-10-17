@@ -1,5 +1,6 @@
 const faker = require('faker');
 const fs = require('fs');
+const jsonexport = require('jsonexport');
 
 let getPackaging = () => {
   return {
@@ -47,45 +48,32 @@ const generateRecord = (i) => {
     description: faker.commerce.productDescription(),
     materials: faker.lorem.sentence(),
     sustainibility: faker.lorem.sentence(),
-    packaging: JSON.stringify(getPackaging()),
-    sizes: JSON.stringify(getSizes()),
-    imageUrls: JSON.stringify(getImages(i))
+    packaging: getPackaging(),
+    sizes: getSizes(),
+    imageUrls: getImages(i)
   };
 };
 
-const makeCSV = (obj) => {
-  return `${obj.name},${obj.id},${obj.description},${obj.materials},${obj.sustainibility},${obj.packaging},${obj.sizes},${obj.imageUrls}\n`;
-};
-
-const parseData = data => {
-  if (data[0] !== 'name') {
-    return {
-      name: data[0],
-      id: data[1],
-      description: data[2],
-      materials: data[3],
-      sustainibility: data[4],
-      packaging: JSON.parse(data[5]),
-      sizes: JSON.parse(data[6]),
-      imageUrls: JSON.parse(data[7]),
-    };
-  }
-  return null;
-};
-
 const writeRecords = fs.createWriteStream('./database/data.csv');
-writeRecords.write('name,id,description,materials,sustainibility,packaging,sizes,imageUrls\n', 'utf8');
 
 const writeNRecords = (n, document) => {
   const startTime = new Date();
   let i = n;
   let id = 0;
-  const write = () => {
+  const options = {
+    verticalOutput: false,
+    mapHeaders: (header) => '',
+    includeHeaders: false,
+  }
+  const write = async () => {
     let ok = true;
     while (i > 0 && ok) {
       i -= 1;
       id += 1;
-      const record = makeCSV(generateRecord(id));
+      let record = await jsonexport(generateRecord(id), options);
+      if (id !== 1) {
+        record = record.split('\n').slice(1).join('') + '\n';
+      }
       if (i === 0) {
         document.write(record, 'utf8', () => {
           console.log(`${id} records written in ${new Date() - startTime} ms`);
