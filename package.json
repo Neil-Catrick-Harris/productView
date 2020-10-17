@@ -5,7 +5,7 @@
   "main": "./server",
   "scripts": {
     "test": "jest --detectOpenHandles --coverage",
-    "seed:db": "node ./database/insert-records.js",
+    "seed": "node ./database/generate-and-insert.js",
     "generate": "node ./database/generate-records.js",
     "build": "webpack -d --watch",
     "start": "node server/index.js"
@@ -40,11 +40,14 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@fast-csv/format": "^4.3.1",
+    "@fast-csv/parse": "^4.3.2",
     "axios": "^0.20.0",
     "csv-write-stream": "^2.0.0",
     "express": "^4.17.1",
     "fast-csv": "^4.3.2",
     "fs": "0.0.1-security",
+    "jsonexport": "^3.0.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.7",
     "path": "^0.12.7",

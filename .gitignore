@@ -5,3 +5,4 @@ package-lock.json
 globalConfig.json
 .vscode/
 dist/
+*.csv
