@@ -14,7 +14,12 @@ const parseData = data => {
   } else {
     const entry = {};
     headers.forEach((header, i) => {
-      entry[header] = data[i];
+      if (data[i].slice(0,4) === 'http') {
+        // urls are delimited by semicolons
+        entry[header] = data[i].split(';');
+      } else {
+        entry[header] = data[i];
+      }
     });
     return entry;
   }
@@ -26,9 +31,7 @@ const seedDb = (callback) => {
   const startTime = new Date();
   fs.createReadStream('./database/data.csv')
   .pipe(csv.parse())
-  .on('error', err => {
-    console.log('pipe/parse error:', err);
-  })
+  .on('error', err => console.log('pipe/parse error:', err))
   .on('data', row => {
     const entry = parseData(row);
     if (entry) {
@@ -39,14 +42,10 @@ const seedDb = (callback) => {
           console.log(`${totalRowCount - 1} records seeded in ${new Date() - startTime} ms`);
           callback(new Date());
         }
-      }).catch((err) => {
-        console.log('entry creation error:', err);
-      });
+      }).catch((err) => console.log('entry creation error:', err));
     }
   })
-  .on('end', (count) => {
-    totalRowCount = count;
-  });
+  .on('end', (count) => totalRowCount = count);
 };
 
 module.exports = (callback) => {
