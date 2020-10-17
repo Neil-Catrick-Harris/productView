@@ -56,7 +56,7 @@ const generateRecord = (i) => {
 
 const writeRecords = fs.createWriteStream('./database/data.csv');
 
-const writeNRecords = (n, document) => {
+const writeNRecords = (n, document, callback) => {
   const startTime = new Date();
   let i = n;
   let id = 0;
@@ -72,11 +72,13 @@ const writeNRecords = (n, document) => {
       id += 1;
       let record = await jsonexport(generateRecord(id), options);
       if (id !== 1) {
-        record = record.split('\n').slice(1).join('') + '\n';
+        record = record.split('\n').slice(1).join('');
       }
+      record += '\n';
       if (i === 0) {
         document.write(record, 'utf8', () => {
           console.log(`${id} records written in ${new Date() - startTime} ms`);
+          callback(new Date());
         });
       } else {
         ok = document.write(record, 'utf8');
@@ -89,4 +91,6 @@ const writeNRecords = (n, document) => {
   write();
 };
 
-writeNRecords(10**7, writeRecords);
+module.exports = (n, callback) => {
+  writeNRecords(n, writeRecords, callback);
+};
