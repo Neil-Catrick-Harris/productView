@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+<<<<<<< HEAD
 const cors = require('cors');
+=======
+>>>>>>> 1591f765e635b0a2f4fa4d1ff1d6eb602e5d3ba9
 // const db = require('../database/index.js');
 const {mongo, postgres, cassandra} = require('../database/db-router.js');
 const db = mongo;
