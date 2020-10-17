@@ -5,7 +5,8 @@
   "main": "./server",
   "scripts": {
     "test": "jest --detectOpenHandles --coverage",
-    "seed:db": "node ./database/seed",
+    "seed:db": "node ./database/insert-records.js",
+    "generate": "node ./database/generate-records.js",
     "build": "webpack -d --watch",
     "start": "node server/index.js"
   },

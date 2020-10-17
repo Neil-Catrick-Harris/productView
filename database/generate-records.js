@@ -1,9 +1,5 @@
 const faker = require('faker');
 const fs = require('fs');
-const csvWriter = require('csv-write-stream');
-const writer = csvWriter();
-const fastcsv = require('fast-csv');
-const { finished } = require('stream');
 
 let getPackaging = () => {
   return {
@@ -57,6 +53,10 @@ const generateRecord = (i) => {
   };
 };
 
+const makeCSV = (obj) => {
+  return `${obj.name},${obj.id},${obj.description},${obj.materials},${obj.sustainibility},${obj.packaging},${obj.sizes},${obj.imageUrls}\n`;
+};
+
 const parseData = data => {
   if (data[0] !== 'name') {
     return {
@@ -73,28 +73,33 @@ const parseData = data => {
   return null;
 };
 
-const writeRecords = (n, cb = () => {}, done =() => {console.log('done')}) => {
-  const startTime = new Date();
-  const numRecords = n;
-  let counter = 1;
-  writer.pipe(fs.createWriteStream('./database/data.csv'));
-  for (let i = 1; i <= numRecords; i++) {
-    writer.write(generateRecord(counter));
-    counter++;
-  }
-  writer.end();
-};
-// let stream = fs.createReadStream('./database/data.csv');
-// let csvStream = fastcsv.parse()
-// .on('data', (data) => cb(parseData(data)))
-// .on('end', () => {
-//   done();
-// });
-// stream.pipe(csvStream);
-// finished(stream, (err) => {
-//   if (err) { return console.log('Stream failed.', err) }
-//   console.log('Stream is done reading');
-// })
+const writeRecords = fs.createWriteStream('./database/data.csv');
+writeRecords.write('name,id,description,materials,sustainibility,packaging,sizes,imageUrls\n', 'utf8');
 
-writeRecords(10000000);
+const writeNRecords = (n, document) => {
+  const startTime = new Date();
+  let i = n;
+  let id = 0;
+  const write = () => {
+    let ok = true;
+    while (i > 0 && ok) {
+      i -= 1;
+      id += 1;
+      const record = makeCSV(generateRecord(id));
+      if (i === 0) {
+        document.write(record, 'utf8', () => {
+          console.log(`${id} records written in ${new Date() - startTime} ms`);
+        });
+      } else {
+        ok = document.write(record, 'utf8')
+      }
+    }
+    if (i > 0) {
+      document.once('drain', write);
+    }
+  }
+  write();
+};
+
+writeNRecords(1000, writeRecords);
 // module.exports = generateRecords;
