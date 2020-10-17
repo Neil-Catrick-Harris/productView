@@ -3,9 +3,10 @@ const insertRecords = require('./insert-records.js');
 
 (() => {
   const startTime = new Date();
-  generateNRecords(10**7, (genDoneTime) => {
-    insertRecords((insDoneTime) => {
-      console.log(`Total runtime for gen + ins: ${insDoneTime - startTime} ms`)
+  const numRecords = 10;
+  generateNRecords(numRecords, genDoneTime => {
+    insertRecords(numRecords, insDoneTime => {
+      console.log(`Total runtime to generate & insert ${numRecords} records: ${insDoneTime - startTime} ms`)
     });
   });
 })()
