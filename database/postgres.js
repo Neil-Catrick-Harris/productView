@@ -21,14 +21,6 @@ const Product = sequelize.define('item',{
     type: DataTypes.STRING,
     allowNull: false
   },
-  articleNumber: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  details: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   materials: {
     type: DataTypes.STRING,
     allowNull: false
