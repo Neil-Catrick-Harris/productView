@@ -91,7 +91,7 @@ const writeNRecords = (n, document) => {
           console.log(`${id} records written in ${new Date() - startTime} ms`);
         });
       } else {
-        ok = document.write(record, 'utf8')
+        ok = document.write(record, 'utf8');
       }
     }
     if (i > 0) {
@@ -101,5 +101,4 @@ const writeNRecords = (n, document) => {
   write();
 };
 
-writeNRecords(1000, writeRecords);
-// module.exports = generateRecords;
+writeNRecords(10**7, writeRecords);
