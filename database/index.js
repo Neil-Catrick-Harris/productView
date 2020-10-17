@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const options =  {
     useNewUrlParser: true,
     useFindAndModify: false,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 };
 
 mongoose.connect('mongodb://localhost/productDetails', options);
