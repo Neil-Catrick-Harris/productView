@@ -2,9 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-// const db = require('../database/index.js');
 const {mongo, postgres, cassandra} = require('../database/db-router.js');
-const db = mongo;
+const db = postgres;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -13,14 +12,16 @@ app.use(cors());
 
 app.get('/api/productView/products/:id', (req, res) => {
   if (req.params.id === 'all') {
-    db.find()
+    db.connect()
+      .then(() => db.getAll())
       .then((response) => {res.json(response)})
       .catch((err) => {
         console.error(err);
         res.end(400);
       });
   } else {
-    db.find({id: req.params.id})
+    db.connect()
+      .then(() => db.getOne(req.params.id))
       .then((resp) => {
         res.json(resp)
       })

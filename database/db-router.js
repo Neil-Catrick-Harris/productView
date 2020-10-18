@@ -25,6 +25,9 @@ const mongo = {
   getOne: (id) => {
     return new Promise((res, rej) => res(MongoItem.find({ id: parseInt(id) })));
   },
+  getAll: (id) => {
+    return new Promise((res, rej) => res(MongoItem.find({})));
+  },
 };
 
 const postgres = {
@@ -52,6 +55,9 @@ const postgres = {
   },
   getOne: (id) => {
     return PostgresItem.findOne({ where: { id }});
+  },
+  getAll: () => {
+    return PostgresItem.findAll();
   }
 };
 
