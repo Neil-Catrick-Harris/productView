@@ -8,16 +8,16 @@ const sequelize = new Sequelize('productviewdb', 'productview','pineapple', {
 /*
 name,id,description,materials,sustainibility,packaging.shortDesc,packaging.measurments.width,packaging.measurments.height,packaging.measurments.length,packaging.measurments.weight,packaging.measurments.packages,sizes.fitting,sizes.attributes.thread-count,sizes.attributes.Pillowcase quantity,sizes.attributes.Duvet cover length,sizes.attributes.Duvet cover width,sizes.attributes.Pillowcase length,sizes.attributes.Pillowcase width,imageUrls*/
 
-const Product = sequelize.define('largeschematestitem',{
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+const Product = sequelize.define('item', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   description: {
     type: DataTypes.STRING,
@@ -80,10 +80,6 @@ const Product = sequelize.define('largeschematestitem',{
     allowNull: false
   },
   'sizes_attributes_pillowcase_width': {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  imageurls: {
     type: DataTypes.STRING,
     allowNull: false
   },

@@ -43,8 +43,8 @@ let getImages = (n) => {
 
 const generateRecord = (i) => {
   return {
-    name: faker.commerce.productName(),
     id: i,
+    name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
     materials: faker.lorem.sentence(),
     sustainibility: faker.lorem.sentence(),
