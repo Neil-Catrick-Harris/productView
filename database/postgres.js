@@ -93,9 +93,33 @@ const Product = sequelize.define('item', {
   }
 });
 
+const Image = sequelize.define('imagetest', {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  url: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+});
+
+Product.belongsToMany(Image, {through: 'Product_Images'});
+Image.belongsToMany(Product, {through: 'Product_Images'});
+
 sequelize.sync();
 
 const shutdownPostgres = sequelize.close;
 
-module.exports = { Product, shutdownPostgres };
+module.exports = { Product, Image, shutdownPostgres };
 
