@@ -2,8 +2,9 @@ const faker = require('faker');
 const fs = require('fs');
 const jsonexport = require('jsonexport');
 
-let getPackaging = () => {
+let getPackaging = (id) => {
   return {
+    id: id,
     shortDesc: faker.lorem.sentence(),
     measurments: {
       width: Math.floor(Math.random() * 15 + 6),
@@ -15,8 +16,9 @@ let getPackaging = () => {
   }
 };
 
-let getSizes = () => {
+let getSizes = (id) => {
   return {
+    id: id,
     fitting: faker.lorem.words() + ` (${faker.lorem.words()})`,
     attributes: {
       "thread-count": Math.floor(Math.random() * 300 + 100),
@@ -29,48 +31,60 @@ let getSizes = () => {
   };
 };
 
-let getImages = (n) => {
-  let imagesArr = [];
+let getImages = (id) => {
+  let imageUrls = [];
   let count = 6 + Math.floor(Math.random() * 5);
   let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
 
   for (i = 0; i < count; i++) {
-    imagesArr.push(`http://placeimg.com/640/480/${categories[ (n + i) % 9]}`);
+    imageUrls.push(`http://placeimg.com/640/480/${categories[ (id + i) % 9]}`);
   }
 
-  return imagesArr;
+  return { id, imageUrls };
 };
 
 const generateRecord = (i) => {
   return {
-    name: faker.commerce.productName(),
     id: i,
+    name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
     materials: faker.lorem.sentence(),
     sustainibility: faker.lorem.sentence(),
-    packaging: getPackaging(),
-    sizes: getSizes(),
-    imageUrls: getImages(i)
   };
 };
 
-const writeRecords = fs.createWriteStream('./database/data.csv');
+const overallFile = fs.createWriteStream('./database/data.csv');
+const sizesFile = fs.createWriteStream('./database/data-sizes.csv');
+const packagingFile = fs.createWriteStream('./database/data-packaging.csv');
+const imageUrlsFile = fs.createWriteStream('./database/data-images.csv');
 
-const writeNRecords = (n, document, callback) => {
+const writeNRecords = (n, document, type, callback) => {
   const startTime = new Date();
   let i = n;
   let id = 0;
+  let func;
   const options = {
     verticalOutput: false,
     mapHeaders: (header) => '',
     includeHeaders: false,
   }
+
+  if (type === 'overall') {
+    func = generateRecord;
+  } else if (type === 'sizes') {
+    func = getSizes;
+  } else if (type === 'packaging') {
+    func = getPackaging;
+  } else if (type === 'images') {
+    func = getImages;
+  }
+
   const write = async () => {
     let ok = true;
     while (i > 0 && ok) {
       i -= 1;
       id += 1;
-      let record = await jsonexport(generateRecord(id), options);
+      let record = await jsonexport(func(id), options);
       if (id !== 1) {
         record = record.split('\n').slice(1).join('');
       }
@@ -92,5 +106,11 @@ const writeNRecords = (n, document, callback) => {
 };
 
 module.exports = (n, callback) => {
-  writeNRecords(n, writeRecords, callback);
+  writeNRecords(n, overallFile, 'overall', () => {
+    writeNRecords(n, sizesFile, 'sizes', () => {
+      writeNRecords(n, packagingFile, 'packaging', () => {
+        writeNRecords(n, imageUrlsFile, 'images', callback)
+      })
+    })
+  })
 };

@@ -1,6 +1,6 @@
 const faker = require('faker');
 const {mongo, postgres, cassandra} = require('./db-router.js');
-const db = mongo;
+const db = postgres;
 
 let packaging = () => {
     let details = {
@@ -66,7 +66,7 @@ let images = (function() {
 const seedDb = function() {
     let dataArray = [];
     const startTime = new Date();
-    const numRecords = 1 * 10**5;
+    const numRecords = 1 * 10;
     for (let i = 1; i <= numRecords; i++) {
         let productDetails = {
             name: faker.commerce.productName(),
