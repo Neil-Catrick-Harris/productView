@@ -3,10 +3,10 @@ const generateNRecords = require('./generate-records.js');
 
 (() => {
   const startTime = new Date();
-  generateNRecords(10**3, (genDoneTime) => {
+  generateNRecords(10**7, (genDoneTime) => {
     // insertRecords((insDoneTime) => {
       console.log(`Total runtime for gen: ${genDoneTime - startTime} ms`);
-      console.log('If using Postgres, you will need to follow the steps in generate-and-insert.js to proceed');
+      console.log('To load data into Postgres and Cassandra, please follow the steps in generate-and-insert.js to proceed');
     // });
   });
 })();
