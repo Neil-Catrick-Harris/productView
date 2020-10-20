@@ -61,8 +61,17 @@ const generateRecord = (i) => {
   };
 };
 
+const getImageRelations = (id) => {
+  let thruTableText = '';
+  getImageIds(id).forEach(imageId => {
+    thruTableText += `${id},${imageId}\n`;
+  });
+  return thruTableText;
+};
+
 const productDataSheet = fs.createWriteStream('./database/data-products.csv');
 const imageDataSheet = fs.createWriteStream('./database/data-images.csv');
+const throughSheet = fs.createWriteStream('./database/data-both.csv');
 
 const writeNRecords = (n, document, callback) => {
   const startTime = new Date();
@@ -73,6 +82,7 @@ const writeNRecords = (n, document, callback) => {
     mapHeaders: (header) => '',
     includeHeaders: false,
   }
+  throughSheet.write('itemsId,imagesId\n');
   const write = async () => {
     let ok = true;
     while (i > 0 && ok) {
@@ -85,11 +95,14 @@ const writeNRecords = (n, document, callback) => {
       record += '\n';
       if (i === 0) {
         document.write(record, 'utf8', () => {
-          console.log(`${id} records written in ${new Date() - startTime} ms`);
-          callback(new Date());
+          throughSheet.write(getImageRelations(id), 'utf8', () => {
+            console.log(`${id} records written in ${new Date() - startTime} ms`);
+            callback(new Date());
+          });
         });
       } else {
         ok = document.write(record, 'utf8');
+        throughSheet.write(getImageRelations(id), 'utf8');
       }
     }
     if (i > 0) {

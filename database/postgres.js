@@ -8,7 +8,7 @@ const sequelize = new Sequelize('productviewdb', 'productview','pineapple', {
 /*
 name,id,description,materials,sustainibility,packaging.shortDesc,packaging.measurments.width,packaging.measurments.height,packaging.measurments.length,packaging.measurments.weight,packaging.measurments.packages,sizes.fitting,sizes.attributes.thread-count,sizes.attributes.Pillowcase quantity,sizes.attributes.Duvet cover length,sizes.attributes.Duvet cover width,sizes.attributes.Pillowcase length,sizes.attributes.Pillowcase width,imageUrls*/
 
-const Product = sequelize.define('item', {
+const Product = sequelize.define('itemtest', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -107,7 +107,7 @@ const Image = sequelize.define('imagetest', {
   url: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: true,
@@ -118,8 +118,30 @@ const Image = sequelize.define('imagetest', {
   },
 });
 
-Product.belongsToMany(Image, {through: 'Product_Images'});
-Image.belongsToMany(Product, {through: 'Product_Images'});
+const ItemImage = sequelize.define('item_imagetest', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  itemid: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  imageid: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+});
 
 sequelize.sync();
 
