@@ -1,13 +1,10 @@
 const generateNRecords = require('./generate-records.js');
-// const insertRecords = require('./insert-records.js');
 
 (() => {
   const startTime = new Date();
   generateNRecords(10**7, (genDoneTime) => {
-    // insertRecords((insDoneTime) => {
-      console.log(`Total runtime for gen: ${genDoneTime - startTime} ms`);
-      console.log('To load data into Postgres and Cassandra, please follow the steps in generate-and-insert.js to proceed');
-    // });
+    console.log(`Total runtime for gen: ${genDoneTime - startTime} ms`);
+    console.log('To load data into Postgres and Cassandra, please follow the steps in generate-and-insert.js to proceed');
   });
 })();
 
@@ -34,7 +31,7 @@ CASSANDRA:
 
 2. Run this in CQLSH:
 CREATE TABLE items (
-    itemId int PRIMARY KEY,
+    id int PRIMARY KEY,
     name text,
     description text,
     materials text,
@@ -52,23 +49,8 @@ CREATE TABLE items (
     sizes_attributes_duvet_cover_width int,
     sizes_attributes_pillowcase_length int,
     sizes_attributes_pillowcase_width int,
-    imageids text
-);
+    imageurls text);
 
-CREATE TABLE images (
-    imageId int PRIMARY KEY,
-    imageUrl text
-);
-
-CREATE TABLE item_images (
-    itemId int PRIMARY KEY,
-    imageId int
-);
-
-****THESE WORKED:****
-COPY images (imageId, imageurl) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-images.csv' with header=true and delimiter =',';
-
-COPY items (itemid,name,description,materials,sustainibility,packaging_shortdesc,packaging_measurments_width,packaging_measurments_height,packaging_measurments_length,packaging_measurments_weight,packaging_measurments_packages,sizes_fitting,sizes_attributes_threadcount,sizes_attributes_pillowcase_quantity,sizes_attributes_duvet_cover_length,sizes_attributes_duvet_cover_width,sizes_attributes_pillowcase_length,sizes_attributes_pillowcase_width,imageids) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-products.csv' with header=true and delimiter =',';
-
-COPY item_images (itemid, imageid) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-both.csv' with header=true and delimiter =',';
+3. Run this in CQLSH:
+COPY items (id,name,description,materials,sustainibility,packaging_shortdesc,packaging_measurments_width,packaging_measurments_height,packaging_measurments_length,packaging_measurments_weight,packaging_measurments_packages,sizes_fitting,sizes_attributes_threadcount,sizes_attributes_pillowcase_quantity,sizes_attributes_duvet_cover_length,sizes_attributes_duvet_cover_width,sizes_attributes_pillowcase_length,sizes_attributes_pillowcase_width,imageurls) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-full.csv' with header=true and delimiter =',';
 */
