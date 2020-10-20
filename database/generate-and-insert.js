@@ -14,14 +14,16 @@ const generateNRecords = require('./generate-records.js');
 
 /*
 FOLLOW THESE STEPS TO INSERT DATA INTO POSTGRESQL:
-1. Run 'node database/postgres.js' in the terminal
+1. Drop tables as needed (likely to have 'items', 'images', and 'item_images')
 
-2. Execute this command from psql:
+2. Run 'node database/postgres.js' in the terminal
+
+3. Execute this command from psql:
 COPY itemtests (id,name,description,materials,sustainibility,packaging_shortdesc,packaging_measurments_width,packaging_measurments_height,packaging_measurments_length,packaging_measurments_weight,packaging_measurments_packages,sizes_fitting,sizes_attributes_threadcount,sizes_attributes_pillowcase_quantity,sizes_attributes_duvet_cover_length,sizes_attributes_duvet_cover_width,sizes_attributes_pillowcase_length,sizes_attributes_pillowcase_width,imageids) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-products.csv' DELIMITER ',' CSV HEADER;
 
-3. Execute from psql:
+4. Execute from psql:
 COPY imagetests (id,url) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-images.csv' DELIMITER ',' CSV HEADER;
 
-4. Execute from psql:
+5. Execute from psql:
 COPY item_imagetests (itemId,imageId) FROM '/Users/turnerkraus/Desktop/sdc/productView/database/data-both.csv' DELIMITER ',' CSV HEADER;
 */

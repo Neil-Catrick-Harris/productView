@@ -5,10 +5,8 @@ const sequelize = new Sequelize('productviewdb', 'productview','pineapple', {
   dialect: 'postgres',
   logging: false
 });
-/*
-name,id,description,materials,sustainibility,packaging.shortDesc,packaging.measurments.width,packaging.measurments.height,packaging.measurments.length,packaging.measurments.weight,packaging.measurments.packages,sizes.fitting,sizes.attributes.thread-count,sizes.attributes.Pillowcase quantity,sizes.attributes.Duvet cover length,sizes.attributes.Duvet cover width,sizes.attributes.Pillowcase length,sizes.attributes.Pillowcase width,imageUrls*/
 
-const Product = sequelize.define('itemtest', {
+const Product = sequelize.define('item', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -97,7 +95,7 @@ const Product = sequelize.define('itemtest', {
   }
 });
 
-const Image = sequelize.define('imagetest', {
+const Image = sequelize.define('image', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -118,7 +116,7 @@ const Image = sequelize.define('imagetest', {
   },
 });
 
-const ItemImage = sequelize.define('item_imagetest', {
+const ItemImage = sequelize.define('item_image', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -147,5 +145,5 @@ sequelize.sync();
 
 const shutdownPostgres = sequelize.close;
 
-module.exports = { Product, Image, shutdownPostgres };
+module.exports = { Product, Image, ItemImage, shutdownPostgres };
 
