@@ -57,11 +57,12 @@ const postgres = {
     return PostgresItem.findOne({ where: { id }});
   },
   getAll: () => {
-    return PostgresItem.findAll();
+    console.log('You have tried to get 10 million records from Postgres. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
+    // return PostgresItem.findAll();
   }
 };
 
-const cassandra = {};
+const cassandra = {
 //   addOne: (record, cb = defaultCB)=> {
 
 //   },
@@ -71,12 +72,19 @@ const cassandra = {};
 //   deleteAll: (cb = defaultCB)=> {
 
 //   },
-//   connect: (cb = defaultCB)=> {
-
-//   },
-//   disconnect: (cb = defaultCB)=> {
-
-//   },
-// };
+  connect: (cb = defaultCB)=> {
+    return new Promise((res, rej) => res(CassandraItem = require('./cassandra.js')));
+  },
+  disconnect: (cb = defaultCB)=> {
+    return new Promise((res, rej) => res(CassandraItem.shutdown()));
+  },
+  getOne: (id) => {
+    return CassandraItem.query(`SELECT * FROM items WHERE itemId=${id}`);
+  },
+  getAll: () => {
+    console.log('You have tried to get 10 million records from Cassandra. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
+  //   return CassandraItem.query(`SELECT * FROM items`);
+  }
+};
 
 module.exports = { mongo, postgres, cassandra };
