@@ -83,6 +83,10 @@ const Product = sequelize.define('item', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  imageids: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: true,

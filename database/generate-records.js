@@ -29,16 +29,23 @@ let getSizes = () => {
   };
 };
 
-let getImages = (n) => {
-  let imagesArr = [];
+let getImageIds = (n) => {
+  let imageIds = [];
   let count = 6 + Math.floor(Math.random() * 5);
-  let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
 
   for (i = 0; i < count; i++) {
-    imagesArr.push(`http://placeimg.com/640/480/${categories[ (n + i) % 9]}`);
+    imageIds.push((n + i) % 9);
   }
 
-  return imagesArr;
+  return imageIds;
+};
+
+const writeImageRecords = async (document) => {
+  let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
+  await document.write('id,url\n');
+  categories.forEach(async (category, i) => {
+    await document.write(`${i},${`http://placeimg.com/640/480/${category}`}\n`);
+  });
 };
 
 const generateRecord = (i) => {
@@ -50,11 +57,12 @@ const generateRecord = (i) => {
     sustainibility: faker.lorem.sentence(),
     packaging: getPackaging(),
     sizes: getSizes(),
-    imageUrls: getImages(i)
+    imageIds: getImageIds(i)
   };
 };
 
-const writeRecords = fs.createWriteStream('./database/data.csv');
+const productDataSheet = fs.createWriteStream('./database/data-products.csv');
+const imageDataSheet = fs.createWriteStream('./database/data-images.csv');
 
 const writeNRecords = (n, document, callback) => {
   const startTime = new Date();
@@ -92,5 +100,6 @@ const writeNRecords = (n, document, callback) => {
 };
 
 module.exports = (n, callback) => {
-  writeNRecords(n, writeRecords, callback);
+  writeImageRecords(imageDataSheet);
+  writeNRecords(n, productDataSheet, callback);
 };

@@ -1,5 +1,5 @@
 const generateNRecords = require('./generate-records.js');
-const insertRecords = require('./insert-records.js');
+// const insertRecords = require('./insert-records.js');
 
 (() => {
   const startTime = new Date();
@@ -8,7 +8,7 @@ const insertRecords = require('./insert-records.js');
       console.log(`Total runtime for gen + ins: ${insDoneTime - startTime} ms`)
     });
   });
-})()
+})();
 
 
 /*
