@@ -1,9 +1,7 @@
 // This router is designed to work with promises to seed mongo, postgres, or cassandra databases
 // It assumes you are using promises
 
-let MongoItem, PostgresItem, shutdownPostgres, CassandraItem;
-
-const defaultCB = () => {};
+let MongoItem, PostgresItem, ImageItem, shutdownPostgres, CassandraItem;
 
 const mongo = {
   name: 'MongoDB',
@@ -49,7 +47,8 @@ const postgres = {
   },
   connect: ()=> {
     return new Promise((res, rej) => {
-      let { Product, shutdownPostgres } = require('./postgres.js');
+      let { Product, Image, shutdownPostgres } = require('./postgres.js');
+      ImageItem = Image;
       res(PostgresItem = Product);
     });
   },
@@ -57,10 +56,14 @@ const postgres = {
     return new Promise((res, rej) => res());
   },
   getOneById: (id) => {
-    return PostgresItem.findOne({ where: { id }});
+    return PostgresItem.findOne({ where: { id }})
+      .then(result => parsePostgresData(result));
   },
   getOneByField: (field, value) => {
     return PostgresItem.findOne({ where: { [field]: value }});
+  },
+  getImages: () => {
+    return ImageItem.findAll();
   },
   getAll: () => {
     console.log('You have tried to get 10 million records from Postgres. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
@@ -94,18 +97,19 @@ const cassandra = {
       "imageurls": ${record.imageUrls.join(';')}}';
       `)
   },
-  deleteAll: (cb = defaultCB)=> {
+  deleteAll: ()=> {
     console.log('You have tried to delete 10 million records from Postgres. That\'s going to take a long time to un-do. If this is not a mistake, please uncomment the corresponding line in db-router.js');
     // CassandraItem.query('drop table items;');
   },
-  connect: (cb = defaultCB)=> {
+  connect: ()=> {
     return new Promise((res, rej) => res(CassandraItem = require('./cassandra.js')));
   },
-  disconnect: (cb = defaultCB)=> {
+  disconnect: ()=> {
     return new Promise((res, rej) => res(CassandraItem.shutdown()));
   },
   getOneById: (id) => {
-    return CassandraItem.execute(`SELECT * FROM items WHERE id=${id}`);
+    return CassandraItem.execute(`SELECT * FROM items WHERE id=${id}`)
+      .then(result => parseCassandraData(result));
   },
   getOneByField: (field, value) => {
     return CassandraItem.execute(`SELECT * FROM items WHERE ${field}='${value}'`);
@@ -115,5 +119,59 @@ const cassandra = {
   //   return CassandraItem.query(`SELECT * FROM items`);
   }
 };
+
+/////// Helper functions to format data prior to sending/////////
+
+const parseData = (obj) => {
+  return {
+    id: obj.id,
+    name: obj.name,
+    description: obj.description,
+    materials: obj.materials,
+    sustainibility: obj.sustainibility,
+    packaging: {
+      shortDesc: obj['packaging_shortdesc'],
+      measurments: {
+        width: obj['packaging_measurments_width'],
+        height: obj['packaging_measurments_height'],
+        length: obj['packaging_measurments_length'],
+        packages: obj['packaging_measurments_packages'],
+      }
+    },
+    sizes: {
+      fitting: obj['sizes_fitting'],
+      attributes: {
+        'thread-count': obj['sizes_attributes_threadcount'],
+        'Pillowcase quantity': obj["sizes_attributes_pillowcase_quantity"],
+        'Duvet cover length': obj["sizes_attributes_duvet_cover_length"],
+        'Duvet cover width': obj["sizes_attributes_duvet_cover_width"],
+        'Pillowcase length': obj["sizes_attributes_pillowcase_length"],
+        'Pillowcase width': obj['sizes_attributes_pillowcase_width'],
+      }
+    },
+  }
+}
+
+const parseCassandraData = (resultSet) => {
+  let obj =  parseData(resultSet.rows[0]);
+  obj.imageUrls = resultSet.rows[0].imageurls.split(';');
+  return obj;
+}
+
+const parsePostgresData = (result) => {
+  let imageUrls = [];
+  return postgres.getImages()
+    .then(rows => {
+      rows.forEach(item => {
+        imageUrls.push(item.url);
+      });
+      return result;
+    })
+    .then(result => {
+      let obj = parseData(result._previousDataValues);
+      obj.imageUrls = imageUrls;
+      return obj;
+    });
+}
 
 module.exports = { mongo, postgres, cassandra };

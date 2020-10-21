@@ -28,7 +28,6 @@ for (let i = 1; i <= numTests; i++) {
 
     const printResult = (result, dbName) => {
       if (dbName === 'Cassandra') {
-        result = parseCassandraData(result);
         cassandraQueries[result.name] = new Date() - times[0];
       } else {
         pgQueries[result.name] = new Date() - times[0];
@@ -56,10 +55,6 @@ for (let i = 1; i <= numTests; i++) {
       });
   });
 }
-
-const parseCassandraData = (resultSet) => {
-  return resultSet.rows[0];
-};
 
 const addAverage = (object) => {
   let values = Object.values(object);
