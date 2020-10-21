@@ -6,6 +6,7 @@ let MongoItem, PostgresItem, shutdownPostgres, CassandraItem;
 const defaultCB = () => {};
 
 const mongo = {
+  name: 'MongoDB',
   connection: MongoItem,
   addOne: (record)=> {
     return new Promise((res, rej) => res(MongoItem.create(record)));
@@ -31,6 +32,7 @@ const mongo = {
 };
 
 const postgres = {
+  name: 'PostgreSQL',
   connection: PostgresItem,
   addOne: (record)=> {
     return new Promise((res, rej) => res(PostgresItem.create(record[0])));
@@ -57,7 +59,7 @@ const postgres = {
   getOneById: (id) => {
     return PostgresItem.findOne({ where: { id }});
   },
-  getOneByField(field, value) => {
+  getOneByField: (field, value) => {
     return PostgresItem.findOne({ where: { [field]: value }});
   },
   getAll: () => {
@@ -67,6 +69,8 @@ const postgres = {
 };
 
 const cassandra = {
+  name: 'Cassandra',
+  connection: CassandraItem,
   addOne: (record)=> {
     CassandraItem.query(`INSERT INTO items JSON '{
       "id": ${record.id},
@@ -101,10 +105,10 @@ const cassandra = {
     return new Promise((res, rej) => res(CassandraItem.shutdown()));
   },
   getOneById: (id) => {
-    return CassandraItem.query(`SELECT * FROM items WHERE id=${id}`);
+    return CassandraItem.execute(`SELECT * FROM items WHERE id=${id}`);
   },
-  getOneByField(field, value) => {
-    return CassandraItem.query(`SELECT * FROM items WHERE ${field}=${value}`);
+  getOneByField: (field, value) => {
+    return CassandraItem.execute(`SELECT * FROM items WHERE ${field}='${value}'`);
   },
   getAll: () => {
     console.log('You have tried to get 10 million records from Cassandra. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
