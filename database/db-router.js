@@ -39,10 +39,11 @@ const postgres = {
     return new Promise((res, rej) => res(PostgresItem.bulkCreate(records)));
   },
   deleteAll: ()=> {
-    return new Promise((res, rej) => res(PostgresItem.destroy({
-      where: {},
-      truncate: true
-    })));
+    console.log('You have tried to delete 10 million records from Postgres. That\'s going to take a long time to un-do. If this is not a mistake, please uncomment the corresponding line in db-router.js');
+    // return new Promise((res, rej) => res(PostgresItem.destroy({
+      // where: {},
+      // truncate: true
+    // })));
   },
   connect: ()=> {
     return new Promise((res, rej) => {
@@ -63,15 +64,33 @@ const postgres = {
 };
 
 const cassandra = {
-//   addOne: (record, cb = defaultCB)=> {
-
-//   },
-//   addMany: (records, cb = defaultCB)=> {
-
-//   },
-//   deleteAll: (cb = defaultCB)=> {
-
-//   },
+  addOne: (record)=> {
+    CassandraItem.query(`INSERT INTO items JSON '{
+      "id": ${record.id},
+      "name": ${record.name},
+      "description": ${record.description},
+      "materials": ${record.materials},
+      "sustainibility": ${record.sustainibility},
+      "packaging_shortdesc": ${record.packaging.shortDesc},
+      "packaging_measurments_width": ${record.packaging.measurments.width},
+      "packaging_measurments_height": ${record.packaging.measurments.height},
+      "packaging_measurments_length": ${record.packaging.measurments.length},
+      "packaging_measurments_weight": ${record.packaging.measurments.weight},
+      "packaging_measurments_packages": ${record.packaging.measurments.packages},
+      "sizes_fitting": ${record.sizes.fitting},
+      "sizes_attributes_threadcount": ${record.sizes.attributes.thread-count},
+      "sizes_attributes_pillowcase_quantity": ${record.sizes.attributes['Pillowcase quantity']},
+      "sizes_attributes_duvet_cover_length": ${record.sizes.attributes['Duvet cover length']},
+      "sizes_attributes_duvet_cover_width": ${record.sizes.attributes['Duvet cover width']},
+      "sizes_attributes_pillowcase_length": ${record.sizes.attributes['Pillowcase length']},
+      "sizes_attributes_pillowcase_width": ${record.sizes.attributes['Pillowcase width']},
+      "imageurls": ${record.imageUrls.join(';')}}';
+      `)
+  },
+  deleteAll: (cb = defaultCB)=> {
+    console.log('You have tried to delete 10 million records from Postgres. That\'s going to take a long time to un-do. If this is not a mistake, please uncomment the corresponding line in db-router.js');
+    // CassandraItem.query('drop table items;');
+  },
   connect: (cb = defaultCB)=> {
     return new Promise((res, rej) => res(CassandraItem = require('./cassandra.js')));
   },
