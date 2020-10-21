@@ -22,7 +22,7 @@ const mongo = {
   disconnect: () => {
     return new Promise((res, rej) => res(MongoItem.db.close()));
   },
-  getOne: (id) => {
+  getOneById: (id) => {
     return new Promise((res, rej) => res(MongoItem.find({ id: parseInt(id) })));
   },
   getAll: (id) => {
@@ -54,8 +54,11 @@ const postgres = {
   disconnect: () => {
     return new Promise((res, rej) => res());
   },
-  getOne: (id) => {
+  getOneById: (id) => {
     return PostgresItem.findOne({ where: { id }});
+  },
+  getOneByField(field, value) => {
+    return PostgresItem.findOne({ where: { [field]: value }});
   },
   getAll: () => {
     console.log('You have tried to get 10 million records from Postgres. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
@@ -97,8 +100,11 @@ const cassandra = {
   disconnect: (cb = defaultCB)=> {
     return new Promise((res, rej) => res(CassandraItem.shutdown()));
   },
-  getOne: (id) => {
-    return CassandraItem.query(`SELECT * FROM items WHERE itemId=${id}`);
+  getOneById: (id) => {
+    return CassandraItem.query(`SELECT * FROM items WHERE id=${id}`);
+  },
+  getOneByField(field, value) => {
+    return CassandraItem.query(`SELECT * FROM items WHERE ${field}=${value}`);
   },
   getAll: () => {
     console.log('You have tried to get 10 million records from Cassandra. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
