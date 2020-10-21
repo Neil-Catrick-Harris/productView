@@ -29,32 +29,60 @@ let getSizes = () => {
   };
 };
 
-let getImages = (n) => {
-  let imagesArr = [];
+let getImageIds = (n) => {
+  let imageIds = [];
   let count = 6 + Math.floor(Math.random() * 5);
-  let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
 
   for (i = 0; i < count; i++) {
-    imagesArr.push(`http://placeimg.com/640/480/${categories[ (n + i) % 9]}`);
+    imageIds.push((n + i) % 9);
   }
 
-  return imagesArr;
+  return imageIds;
+};
+
+const writeImageRecords = async (document) => {
+  let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
+  await document.write('id,url\n');
+  categories.forEach(async (category, i) => {
+    await document.write(`${i},${`http://placeimg.com/640/480/${category}`}\n`);
+  });
 };
 
 const generateRecord = (i) => {
   return {
-    name: faker.commerce.productName(),
     id: i,
+    name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
     materials: faker.lorem.sentence(),
     sustainibility: faker.lorem.sentence(),
     packaging: getPackaging(),
     sizes: getSizes(),
-    imageUrls: getImages(i)
+    imageIds: getImageIds(i)
   };
 };
 
-const writeRecords = fs.createWriteStream('./database/data.csv');
+const includeImageUrls = (record) => {
+  let categories = ["fashion", "nature", "abstract", "animals", "business", "cats", "city", "food", "nightlife"];
+  record.imageUrls = [];
+  record.imageIds.forEach((id, i) => {
+    record.imageUrls[i] = (`http://placeimg.com/640/480/${categories[id]}`);
+  });
+  delete record.imageIds;
+  return record;
+};
+
+const getImageRelations = (id) => {
+  let thruTableText = '';
+  getImageIds(id).forEach(imageId => {
+    thruTableText += `${id},${imageId}\n`;
+  });
+  return thruTableText;
+};
+
+const productDataSheet = fs.createWriteStream('./database/data-products.csv');
+const imageDataSheet = fs.createWriteStream('./database/data-images.csv');
+const throughSheet = fs.createWriteStream('./database/data-both.csv');
+const noSQLSheet = fs.createWriteStream('./database/data-full.csv');
 
 const writeNRecords = (n, document, callback) => {
   const startTime = new Date();
@@ -63,34 +91,52 @@ const writeNRecords = (n, document, callback) => {
   const options = {
     verticalOutput: false,
     mapHeaders: (header) => '',
-    includeHeaders: false,
+    // includeHeaders: false,
   }
+  throughSheet.write('itemsId,imagesId\n');
+  // noSQLSheet.write('id,name,description,materials,sustainibility,packaging,sizes,imageUrls\n');
   const write = async () => {
-    let ok = true;
-    while (i > 0 && ok) {
+    let ok1 = true;
+    let ok2 = true;
+    while (i > 0 && ok1 && ok2) {
       i -= 1;
       id += 1;
-      let record = await jsonexport(generateRecord(id), options);
+      let rawRecord = generateRecord(id);
+      let record = await jsonexport(rawRecord, options);
+      let intermediateRecord = includeImageUrls(rawRecord);
+      let noSQLRecord = await jsonexport(intermediateRecord, {verticalOutput: false});
       if (id !== 1) {
         record = record.split('\n').slice(1).join('');
+        noSQLRecord = noSQLRecord.split('\n').slice(1).join('');
       }
       record += '\n';
+      noSQLRecord += '\n';
       if (i === 0) {
         document.write(record, 'utf8', () => {
-          console.log(`${id} records written in ${new Date() - startTime} ms`);
-          callback(new Date());
+          noSQLSheet.write(noSQLRecord, 'utf8', () => {
+            throughSheet.write(getImageRelations(id), 'utf8', () => {
+              console.log(`${id} records written in ${new Date() - startTime} ms`);
+              callback(new Date());
+            });
+          });
         });
       } else {
-        ok = document.write(record, 'utf8');
+        ok1 = document.write(record, 'utf8');
+        ok2 = noSQLSheet.write(noSQLRecord, 'utf8');
+        throughSheet.write(getImageRelations(id), 'utf8');
       }
     }
-    if (i > 0) {
+    if (i > 0 && !ok1) {
       document.once('drain', write);
+    }
+    if (i > 0 && !ok2) {
+      noSQLSheet.once('drain', write);
     }
   }
   write();
 };
 
 module.exports = (n, callback) => {
-  writeNRecords(n, writeRecords, callback);
+  writeImageRecords(imageDataSheet);
+  writeNRecords(n, productDataSheet, callback);
 };
