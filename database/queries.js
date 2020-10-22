@@ -1,4 +1,6 @@
 const { postgres, cassandra } = require('./db-router.js');
+const fs = require('fs');
+const exampleObjFile = fs.createWriteStream('./database/example-objects.json');
 
 let pgQueries = {};
 let cassandraQueries = {};

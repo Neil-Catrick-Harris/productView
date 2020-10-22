@@ -91,10 +91,8 @@ const writeNRecords = (n, document, callback) => {
   const options = {
     verticalOutput: false,
     mapHeaders: (header) => '',
-    // includeHeaders: false,
   }
   throughSheet.write('itemsId,imagesId\n');
-  // noSQLSheet.write('id,name,description,materials,sustainibility,packaging,sizes,imageUrls\n');
   const write = async () => {
     let ok1 = true;
     let ok2 = true;
