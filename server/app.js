@@ -2,26 +2,37 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const morgan = require('morgan');
 const {mongo, postgres, cassandra} = require('../database/db-router.js');
-const db = postgres;
+const db = cassandra;
+app.dbName = db.name;
+let isConnected = false;
 
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
 app.get('/api/productView/products/:id', (req, res) => {
   if (req.params.id === 'all') {
-    db.connect()
-      .then(() => db.getAll())
+    db.connect(isConnected)
+      .then(() => {
+        db.getAll();
+        isConnected = true;
+      })
       .then((response) => {res.json(response)})
       .catch((err) => {
         console.error(err);
         res.end(400);
       });
   } else {
-    db.connect()
-      .then(() => db.getOne(req.params.id))
+    db.connect(isConnected)
+      .then(() => {
+        debugger;
+        isConnected = true;
+        return db.getOneById(req.params.id);
+      })
       .then((resp) => {
         res.json(resp)
       })
@@ -37,8 +48,11 @@ app.get('/api/productView/products/:id', (req, res) => {
 
 app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
-  db.connect()
-  .then(() => db.getOne(req.params.id))
+  db.connect(isConnected)
+  .then(() => {
+    isConnected = true;
+    return db.getOneById(req.params.id);
+  })
   .then((resp) => {
     res.json(resp);
   })
@@ -48,13 +62,16 @@ app.get('/:id', (req, res) => {
   })
   .finally(() => {
     res.end();
-    db.disconnect();
+    isConnected = false;
   });
 });
 
 app.post('/api/productView/addProduct', (req, res) => {
-  db.connect()
-  .then(() => db.addOne(req.body))
+  db.connect(isConnected)
+  .then(() => {
+    db.addOne(req.body);
+    isConnected = true;
+  })
   .then(response => {
     res.send(200);
   })
@@ -63,7 +80,6 @@ app.post('/api/productView/addProduct', (req, res) => {
   })
   .finally(() => {
     res.end();
-    db.disconnect();
   })
 });
 

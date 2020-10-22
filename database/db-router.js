@@ -15,8 +15,11 @@ const mongo = {
   deleteAll: ()=> {
     return new Promise((res, rej) => res(MongoItem.deleteMany({})));
   },
-  connect: ()=> {
-    return new Promise((res, rej) => res(MongoItem = require('./index.js')));
+  connect: (isConnected)=> {
+    if (!isConnected) {
+      return new Promise((res, rej) => res(MongoItem = require('./index.js')));
+    }
+    return new Promise((res, rej) => res());
   },
   disconnect: () => {
     return new Promise((res, rej) => res(MongoItem.db.close()));
@@ -45,12 +48,15 @@ const postgres = {
       // truncate: true
     // })));
   },
-  connect: ()=> {
-    return new Promise((res, rej) => {
-      let { Product, Image, shutdownPostgres } = require('./postgres.js');
-      ImageItem = Image;
-      res(PostgresItem = Product);
-    });
+  connect: (isConnected)=> {
+    if (!isConnected) {
+      return new Promise((res, rej) => {
+        let { Product, Image, shutdownPostgres } = require('./postgres.js');
+        ImageItem = Image;
+        res(PostgresItem = Product);
+      });
+    }
+    return new Promise((res, rej) => res());
   },
   disconnect: () => {
     return new Promise((res, rej) => res());
@@ -101,8 +107,11 @@ const cassandra = {
     console.log('You have tried to delete 10 million records from Postgres. That\'s going to take a long time to un-do. If this is not a mistake, please uncomment the corresponding line in db-router.js');
     // CassandraItem.query('drop table items;');
   },
-  connect: ()=> {
-    return new Promise((res, rej) => res(CassandraItem = require('./cassandra.js')));
+  connect: (isConnected)=> {
+    if (!isConnected) {
+      return new Promise((res, rej) => res(CassandraItem = require('./cassandra.js')));
+    }
+    return new Promise((res, rej) => res());
   },
   disconnect: ()=> {
     return new Promise((res, rej) => res(CassandraItem.shutdown()));
