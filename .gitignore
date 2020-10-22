@@ -1,8 +1,8 @@
 node_modules/
+client/
 /coverage
 .package.json
 package-lock.json
 globalConfig.json
 .vscode/
 *.csv
-client/
