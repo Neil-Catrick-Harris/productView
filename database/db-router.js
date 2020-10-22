@@ -153,6 +153,7 @@ const parseData = (obj) => {
         width: obj['packaging_measurments_width'],
         height: obj['packaging_measurments_height'],
         length: obj['packaging_measurments_length'],
+        weight: obj['packaging_measurments_weight'],
         packages: obj['packaging_measurments_packages'],
       }
     },

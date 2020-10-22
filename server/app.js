@@ -19,7 +19,7 @@ app.get('/api/productView/products/:id', (req, res) => {
     .then(result => res.json([result]))
     .catch(err => {
       console.error(err);
-      res.send(400);
+      res.sendStatus(400);
   });
 });
 
@@ -33,28 +33,32 @@ app.get('/api/productView/products', (req, res) => {
 });
 
 app.get('/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  if (req.params.id === 'favicon.ico') {
+    res.sendStatus(200);
+  } else {
+    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  }
 });
 
 app.post('/api/productView/products', (req, res) => {
   db.addOne(req.body)
-    .then(result => res.send(200))
+    .then(result => res.sendStatus(200))
     .catch(err => {
       console.error(err);
-      res.send(400)
+      res.sendStatus(400)
     });
 });
 
 app.put('/api/productView/products/:id', (req, res) => {
   db.updateOne(req.params.id)
     .then(result => res.json(result))
-    .catch(err => res.send(400));
+    .catch(err => res.sendStatus(400));
 });
 
 app.delete('/api/productView/products/:id', (req, res) => {
   db.deleteOne({ id: req.params.id })
     .then(result => res.json(result))
-    .catch(err => res.send(400));
+    .catch(err => res.sendStatus(400));
 });
 
 module.exports = app;
