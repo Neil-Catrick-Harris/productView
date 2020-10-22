@@ -15,35 +15,31 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
 app.get('/api/productView/products/:id', (req, res) => {
-  if (req.params.id === 'all') {
-    db.connect(isConnected)
-      .then(() => {
-        db.getAll();
-        isConnected = true;
-      })
-      .then((response) => {res.json(response)})
-      .catch((err) => {
-        console.error(err);
-        res.end(400);
-      });
-  } else {
-    db.connect(isConnected)
-      .then(() => {
-        debugger;
-        isConnected = true;
-        return db.getOneById(req.params.id);
-      })
-      .then((resp) => {
-        res.json(resp)
-      })
-      .catch((err) => {
-        console.error(err);
-        res.send(400);
+  db.connect(isConnected)
+    .then(() => {
+      isConnected = true;
+      return db.getOneById(req.params.id);
     })
-    .finally(() => {
-        res.end();
-      });
-  }
+    .then((resp) => {
+      res.json(resp)
+    })
+    .catch((err) => {
+      console.error(err);
+      res.send(400);
+  });
+});
+
+app.get('/api/productView/products', (req, res) => {
+  db.connect(isConnected)
+    .then(() => {
+      db.getAll();
+      isConnected = true;
+    })
+    .then((response) => {res.json(response)})
+    .catch((err) => {
+      console.error(err);
+      res.end(400);
+    });
 });
 
 app.get('/:id', (req, res) => {
@@ -66,7 +62,7 @@ app.get('/:id', (req, res) => {
   });
 });
 
-app.post('/api/productView/addProduct', (req, res) => {
+app.post('/api/productView/products', (req, res) => {
   db.connect(isConnected)
   .then(() => {
     db.addOne(req.body);
@@ -83,7 +79,7 @@ app.post('/api/productView/addProduct', (req, res) => {
   })
 });
 
-app.put('/api/productView/editProductById/:id', (req, res) => {
+app.put('/api/productView/products/:id', (req, res) => {
   let productInfo = req.body;
   let filter = { id: req.params.id };
   // find product if exists--get mongoose _id
@@ -94,7 +90,7 @@ app.put('/api/productView/editProductById/:id', (req, res) => {
     .catch(err => res.send(400));
 });
 
-app.delete('/api/productView/deleteProductById/:id', (req, res) => {
+app.delete('/api/productView/products/:id', (req, res) => {
   db.deleteOne({ id: req.params.id })
     .then(result => res.json(result))
     .catch(err => res.send(400));
