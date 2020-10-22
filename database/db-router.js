@@ -30,6 +30,9 @@ const mongo = {
   getAll: (id) => {
     return new Promise((res, rej) => res(MongoItem.find({})));
   },
+  updateOne: (id) => {
+    console.log('The `update` route has not yet been set up for Mongo');
+  },
 };
 
 const postgres = {
@@ -74,7 +77,10 @@ const postgres = {
   getAll: () => {
     console.log('You have tried to get 10 million records from Postgres. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
     // return PostgresItem.findAll();
-  }
+  },
+  updateOne: (id) => {
+    console.log('The `update` route has not yet been set up for Postgres');
+  },
 };
 
 const cassandra = {
@@ -126,7 +132,10 @@ const cassandra = {
   getAll: () => {
     console.log('You have tried to get 10 million records from Cassandra. That\'s going to take a long time. If this is not a mistake, please uncomment the corresponding line in db-router.js');
   //   return CassandraItem.query(`SELECT * FROM items`);
-  }
+  },
+  updateOne: (id) => {
+    console.log('The `update` has not yet been set up for Cassandra');
+  },
 };
 
 /////// Helper functions to format data prior to sending/////////
