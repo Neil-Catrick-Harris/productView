@@ -8,7 +8,8 @@
     "seed": "node ./database/generate-and-insert.js",
     "generate": "node ./database/generate-records.js",
     "build": "webpack -d --watch",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "stress": "k6 run ./database/k6-loading/test.js"
   },
   "repository": {
     "type": "git",

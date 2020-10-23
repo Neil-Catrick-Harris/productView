@@ -1,27 +1,46 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
+
+// Attempt at constant RPS from this blog:
+// https://k6.io/blog/how-to-generate-a-constant-request-rate-in-k6
+
+/* User Inputs */
+const RPS = 1000;
+const isAPI = true;
+/* End of User Inputs */
+
+const R = 1000;
+const request_duration = 7 / 1000; // s
+const T = Math.floor(R * request_duration) || 1; // s
+const VUs = Math.floor(RPS * T / R);
+
 export let options = {
-  vus: 6,
-  duration: '60s',
-  // rps: 1000,
+  vus: VUs,
+  duration: '1s',
 };
 
-// const RPS = 1000;
-// const RPSmap = {
-//   1: 1,
-//   10: 11,
-//   100: 140,
-//   1000: 2500
-// };
-// const RPSeffective = RPSmap[RPS];
-const isAPI = true;
-
-export default function () {
+const makeRequest = () => {
   if (isAPI) {
     http.get(`http://localhost:3002/api/productView/products/${Math.floor(Math.random() * 10**7)}`);
   } else {
     http.get(`http://localhost:3002/${Math.floor(Math.random() * 10**7)}`);
   }
-  // sleep(1 / (RPSeffective));
+};
+
+export default function () {
+  const before = new Date().getTime();
+
+  for (let i = 0; i < R; i++) {
+    makeRequest();
+  }
+
+  const after = new Date().getTime();
+  const diff = (after - before) / 1000;
+  const remainder = T - diff;
+  if (remainder > 0) {
+    sleep(remainder);
+  } else {
+    console.warn(`Timer exhausted. Execution time of the test took longer than ${T} seconds`);
+  }
 }
 

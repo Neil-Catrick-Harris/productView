@@ -7,3 +7,4 @@ globalConfig.json
 .vscode/
 *.csv
 newrelic.js
+newrelic_agent.log
