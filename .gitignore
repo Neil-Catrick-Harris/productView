@@ -6,3 +6,4 @@ package-lock.json
 globalConfig.json
 .vscode/
 *.csv
+newrelic.js
