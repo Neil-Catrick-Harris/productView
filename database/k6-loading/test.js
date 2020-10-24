@@ -1,22 +1,15 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
 
-// Attempt at constant RPS from this blog:
-// https://k6.io/blog/how-to-generate-a-constant-request-rate-in-k6
+/* To specify the target RPS, see throttle-test.js */
 
 /* User Inputs */
-const RPS = 1000;
 const isAPI = true;
 /* End of User Inputs */
 
-const R = 1000;
-const request_duration = 7 / 1000; // s
-const T = Math.floor(R * request_duration) || 1; // s
-const VUs = Math.floor(RPS * T / R);
-
 export let options = {
-  vus: VUs,
-  duration: '1s',
+  vus: 100,
+  duration: '1800s',
 };
 
 const makeRequest = () => {
@@ -28,19 +21,6 @@ const makeRequest = () => {
 };
 
 export default function () {
-  const before = new Date().getTime();
-
-  for (let i = 0; i < R; i++) {
-    makeRequest();
-  }
-
-  const after = new Date().getTime();
-  const diff = (after - before) / 1000;
-  const remainder = T - diff;
-  if (remainder > 0) {
-    sleep(remainder);
-  } else {
-    console.warn(`Timer exhausted. Execution time of the test took longer than ${T} seconds`);
-  }
+  makeRequest();
 }
 

@@ -87,27 +87,29 @@ const cassandra = {
   name: 'Cassandra',
   connection: CassandraItem,
   addOne: (record)=> {
-    CassandraItem.query(`INSERT INTO items JSON '{
-      "id": ${record.id},
-      "name": ${record.name},
-      "description": ${record.description},
-      "materials": ${record.materials},
-      "sustainibility": ${record.sustainibility},
-      "packaging_shortdesc": ${record.packaging.shortDesc},
-      "packaging_measurments_width": ${record.packaging.measurments.width},
-      "packaging_measurments_height": ${record.packaging.measurments.height},
-      "packaging_measurments_length": ${record.packaging.measurments.length},
-      "packaging_measurments_weight": ${record.packaging.measurments.weight},
-      "packaging_measurments_packages": ${record.packaging.measurments.packages},
-      "sizes_fitting": ${record.sizes.fitting},
-      "sizes_attributes_threadcount": ${record.sizes.attributes.thread-count},
-      "sizes_attributes_pillowcase_quantity": ${record.sizes.attributes['Pillowcase quantity']},
-      "sizes_attributes_duvet_cover_length": ${record.sizes.attributes['Duvet cover length']},
-      "sizes_attributes_duvet_cover_width": ${record.sizes.attributes['Duvet cover width']},
-      "sizes_attributes_pillowcase_length": ${record.sizes.attributes['Pillowcase length']},
-      "sizes_attributes_pillowcase_width": ${record.sizes.attributes['Pillowcase width']},
-      "imageurls": ${record.imageUrls.join(';')}}';
-      `)
+    const queryString = `INSERT INTO items (id, name, description, materials, sustainibility, packaging_shortdesc, packaging_measurments_width, packaging_measurments_height, packaging_measurments_length, packaging_measurments_weight, packaging_measurments_packages, sizes_fitting, sizes_attributes_threadcount, sizes_attributes_pillowcase_quantity, sizes_attributes_pillowcase_length, sizes_attributes_pillowcase_width, sizes_attributes_duvet_cover_length, sizes_attributes_duvet_cover_width, imageurls) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const params = [
+      record.id,
+      record.name,
+      record.description,
+      record.materials,
+      record.sustainibility,
+      record.packaging.shortDesc,
+      record.packaging.measurments.width,
+      record.packaging.measurments.height,
+      record.packaging.measurments.length,
+      record.packaging.measurments.weight,
+      record.packaging.measurments.packages,
+      record.sizes.fitting,
+      record.sizes.attributes['thread-count'],
+      record.sizes.attributes['Pillowcase quantity'],
+      record.sizes.attributes['Pillowcase length'],
+      record.sizes.attributes['Pillowcase width'],
+      record.sizes.attributes['Duvet cover length'],
+      record.sizes.attributes['Duvet cover width'],
+      record.imageUrls.join(';')
+    ];
+    return CassandraItem.execute(queryString, params, {prepare: true});
   },
   deleteAll: ()=> {
     console.log('You have tried to delete 10 million records from Postgres. That\'s going to take a long time to un-do. If this is not a mistake, please uncomment the corresponding line in db-router.js');
