@@ -16,10 +16,11 @@ const mongo = {
     return new Promise((res, rej) => res(MongoItem.deleteMany({})));
   },
   connect: (isConnected)=> {
-    if (!isConnected) {
-      return new Promise((res, rej) => res(MongoItem = require('./index.js')));
-    }
-    return new Promise((res, rej) => res());
+    console.log('MongoDB is not connected on this branch. Please switch to another');
+    // if (!isConnected) {
+    //   return new Promise((res, rej) => res(MongoItem = require('./index.js')));
+    // }
+    // return new Promise((res, rej) => res());
   },
   disconnect: () => {
     return new Promise((res, rej) => res(MongoItem.db.close()));
@@ -52,14 +53,15 @@ const postgres = {
     // })));
   },
   connect: (isConnected)=> {
-    if (!isConnected) {
-      return new Promise((res, rej) => {
-        let { Product, Image, shutdownPostgres } = require('./postgres.js');
-        ImageItem = Image;
-        res(PostgresItem = Product);
-      });
-    }
-    return new Promise((res, rej) => res());
+    console.log('PostgreSQL is not connected on this branch. Please switch to another');
+    // if (!isConnected) {
+    //   return new Promise((res, rej) => {
+    //     let { Product, Image, shutdownPostgres } = require('./postgres.js');
+    //     ImageItem = Image;
+    //     res(PostgresItem = Product);
+    //   });
+    // }
+    // return new Promise((res, rej) => res());
   },
   disconnect: () => {
     return new Promise((res, rej) => res());
