@@ -24,8 +24,7 @@ const makeGetRequest = () => {
 const makePostRequest = () => {
   const url = `http://localhost:3002/api/productView/products`;
   let headers = { 'Content-Type': 'application/json' };
-  let body = sampleObject;
-  let res = http.post(url, JSON.stringify([body]), { headers });
+  let res = http.post(url, JSON.stringify(sampleObject), { headers });
 }
 
 export default function () {

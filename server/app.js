@@ -42,7 +42,7 @@ app.get('/:id', (req, res) => {
 });
 
 app.post('/api/productView/products', (req, res) => {
-  db.addOne(req.body[0])
+  db.addOne(req.body)
     .then(result => res.sendStatus(200))
     .catch(err => {
       console.error(err);
