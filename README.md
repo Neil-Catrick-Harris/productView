@@ -9,7 +9,7 @@
 - Read: (GET): `/api/productView/products/:id`
 
 ## CRUD Endpoints: Added/Modified by Turner Kraus
-### [Link to Express server](https://github.com/Neil-Catrick-Harris/productView/blob/add-CRUD-endpoints/server/app.js)
+### [Link to Express server](https://github.com/Neil-Catrick-Harris/productView/blob/master/server/app.js)
 - Read: (GET): `/api/productView/products/:id`
   - `:id` can be either the product ID (default is #1-100) OR `all` (responds with entire database)
   - e.g. GET request to `/api/productView/products/2` sends product information for product with `id = 2`
