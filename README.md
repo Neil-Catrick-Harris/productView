@@ -1,9 +1,10 @@
 # productView
 ## SETUP:
-<br />1: NPM install dependencies
-<br />2: Seed database: npm run seed:db -> should result in 100 records inserted
-<br />3: start server: npm start
-<br />4: Build client pack: npm run build
+- 1: `npm install` dependencies
+- 2: `npm run generate` to generate 10 million unique records--expected wait time 8 minutes. Afterward, the file `...productView/database/data-full.csv` should exist.
+- 3: `npm run seed` to seed the 10 million records into your Cassandra database. Note: you may need to create/update your Cassandra keyspace accordingly.
+- 4: start server: npm start
+- 5: Build client pack: npm run build
 
 ## CRUD Endpoints implemented by Ahmed Elawad
 - Read: (GET): `/api/productView/products/:id`

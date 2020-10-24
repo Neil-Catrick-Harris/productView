@@ -5,8 +5,8 @@
   "main": "./server",
   "scripts": {
     "test": "jest --detectOpenHandles --coverage",
-    "seed": "node ./database/generate-and-insert.js",
-    "generate": "node ./database/generate-records.js",
+    "generate": "node ./database/generate-10M.js",
+    "seed": "cqlsh --file=\"/Users/turnerkraus/Desktop/sdc/productView/database/insert-records.cql\"",
     "build": "webpack -d --watch",
     "start": "node server/index.js",
     "stress": "k6 run ./database/k6-loading/test.js"
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/hrr48-BlueJayWay/productView.git"
   },
-  "author": "Ahmed-Elawad",
+  "author": "Frontend: Ahmed-Elawad Backend: Turner Kraus",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/hrr48-BlueJayWay/productView/issues"
