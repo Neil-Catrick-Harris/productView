@@ -7,6 +7,7 @@
     "test": "jest --detectOpenHandles --coverage",
     "generate": "node ./database/generate-10M.js",
     "seed": "cqlsh --file=\"/Users/turnerkraus/Desktop/sdc/productView/database/insert-records.cql\"",
+    "seed-more": "cqlsh --file=\"./database/insert-records-dont-drop.cql\"",
     "build": "webpack -d --watch",
     "start": "node server/index.js",
     "stress": "k6 run ./database/k6-loading/test.js"
