@@ -68,7 +68,7 @@ const noSQLSheet = fs.createWriteStream('./database/data-full.csv');
 const writeNRecords = (n, callback) => {
   const startTime = new Date();
   let i = n;
-  let id = 0;
+  let id = 5000000;
   const options = {
     verticalOutput: false,
     mapHeaders: (header) => '',
@@ -81,7 +81,7 @@ const writeNRecords = (n, callback) => {
       let rawRecord = generateRecord(id);
       let intermediateRecord = includeImageUrls(rawRecord);
       let noSQLRecord = await jsonexport(intermediateRecord, {verticalOutput: false});
-      if (id !== 1) {
+      if (id !== 5000001) {
         noSQLRecord = noSQLRecord.split('\n').slice(1).join('');
       }
       noSQLRecord += '\n';

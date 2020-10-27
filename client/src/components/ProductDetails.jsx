@@ -1,6 +1,6 @@
 import React from 'react';
 import MaterialsCare from './MaterialsCare.jsx';
-import Sustainibility from './Sustainability.jsx';
+import Sustainibility from './sustainability.jsx';
 import Packaging from './Packaging.jsx';
 import Modal from './Modal.jsx';
 import styles from '../styled.js';
