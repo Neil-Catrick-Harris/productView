@@ -12,7 +12,6 @@ db.connect();
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
 app.get('/api/productView/products/:id', (req, res) => {
@@ -34,17 +33,8 @@ app.get('/api/productView/products', (req, res) => {
 });
 
 app.get('/loaderio-1ffce587c4169230698ec4c56e818db5/', (req, res) => {
-  console.log('sending loader confirmation');
+  // loader.io verification on 10/27
   res.send('loaderio-1ffce587c4169230698ec4c56e818db5');
-  console.log('sent the loader confirmation');
-});
-
-app.get('/:id', (req, res) => {
-  if (req.params.id === 'favicon.ico') {
-    res.sendStatus(200);
-  } else {
-    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
-  }
 });
 
 app.post('/api/productView/products', (req, res) => {
@@ -66,12 +56,6 @@ app.delete('/api/productView/products/:id', (req, res) => {
   db.deleteOne({ id: req.params.id })
     .then(result => res.json(result))
     .catch(err => res.sendStatus(400));
-});
-
-app.get('loaderio-5a56bd372eb14603572b31dadc5b8453/', (req, res) => {
-  console.log('sending loader confirmation');
-  res.sendFile(path.join(__dirname, '..', 'loaderio.txt'));
-  console.log('sent the loader confirmation');
 });
 
 module.exports = app;

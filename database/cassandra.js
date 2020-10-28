@@ -6,10 +6,4 @@ const client = new cassandra.Client({
   keyspace: 'test_keyspace'
 });
 
-// const query = `SELECT * FROM items WHERE itemId=${9999999};`;
-
-// client.execute(query)
-//   .then(result => console.log(result));
-
-
 module.exports = client;
