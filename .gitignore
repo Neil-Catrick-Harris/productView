@@ -8,3 +8,4 @@ globalConfig.json
 *.csv
 newrelic.js
 newrelic_agent.log
+loaderio.js
