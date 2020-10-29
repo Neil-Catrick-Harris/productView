@@ -5,9 +5,9 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const {mongo, postgres, cassandra} = require('../database/db-router.js');
-const db = cassandra;
-app.dbName = db.name;
-db.connect();
+const axios = require('axios');
+app.dbName = 'Cassandra';
+const dbIP = `54.151.15.44`;
 
 app.use(express.json());
 app.use(morgan('dev'));
@@ -15,28 +15,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
-app.get('/api/productView/products/:id', (req, res) => {
-  db.getOneById(req.params.id)
-    .then(result => res.json([result]))
-    .catch(err => {
-      console.error(err);
-      res.sendStatus(400);
-  });
-});
-
-app.get('/api/productView/products', (req, res) => {
-  db.getAll()
-    .then(result => res.json([result]))
-    .catch(err => {
-      console.error(err);
-      res.end(400);
-    });
+app.get('/api/*', (req, res) => {
+  axios.get(`http://${dbIP}:3002${req.url}`)
+    .then(result => res.send(result.data[0]))
+    .catch(err => res.sendStatus(400));
 });
 
 app.get('/loaderio-1ffce587c4169230698ec4c56e818db5/', (req, res) => {
-  console.log('sending loader confirmation');
   res.send('loaderio-1ffce587c4169230698ec4c56e818db5');
-  console.log('sent the loader confirmation');
 });
 
 app.get('/:id', (req, res) => {
@@ -47,31 +33,10 @@ app.get('/:id', (req, res) => {
   }
 });
 
-app.post('/api/productView/products', (req, res) => {
-  db.addOne(req.body)
-    .then(result => res.sendStatus(200))
-    .catch(err => {
-      console.error(err);
-      res.sendStatus(400)
-    });
-});
-
-app.put('/api/productView/products/:id', (req, res) => {
-  db.updateOne(req.params.id)
-    .then(result => res.json(result))
+app.post('/api/*', (req, res) => {
+  axios.post(`http://${dbIP}:3002${req.url}`, req.body)
+    .then(result => res.send(result.data))
     .catch(err => res.sendStatus(400));
-});
-
-app.delete('/api/productView/products/:id', (req, res) => {
-  db.deleteOne({ id: req.params.id })
-    .then(result => res.json(result))
-    .catch(err => res.sendStatus(400));
-});
-
-app.get('loaderio-5a56bd372eb14603572b31dadc5b8453/', (req, res) => {
-  console.log('sending loader confirmation');
-  res.sendFile(path.join(__dirname, '..', 'loaderio.txt'));
-  console.log('sent the loader confirmation');
 });
 
 module.exports = app;
