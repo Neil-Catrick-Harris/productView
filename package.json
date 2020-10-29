@@ -4,12 +4,8 @@
   "description": "Main product view module that uses react with an express backed server to mimic functionality similar to a main product view module found on Ikea.com",
   "main": "./server",
   "scripts": {
-    "test": "jest --detectOpenHandles --coverage",
-    "generate": "node ./database/generate-10M.js",
-    "seed": "../apache-cassandra-3.11.8/bin/cqlsh --file=\"./database/insert-records.cql\"",
     "build": "webpack",
-    "start": "node server/index.js",
-    "stress": "k6 run ./database/k6-loading/test.js"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
