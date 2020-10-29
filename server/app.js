@@ -14,6 +14,10 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.redirect('/api/productView/products/1');
+});
+
 app.get('/api/productView/products/:id', (req, res) => {
   db.getOneById(req.params.id)
     .then(result => res.json([result]))

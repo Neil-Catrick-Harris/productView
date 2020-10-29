@@ -3,8 +3,7 @@
 - 1: `npm install` dependencies
 - 2: `npm run generate` to generate 10 million unique records--expected wait time 8 minutes. Afterward, the file `...productView/database/data-full.csv` should exist.
 - 3: `npm run seed` to seed the 10 million records into your Cassandra database. Note: you may need to create/update your Cassandra keyspace accordingly.
-- 5: `npm run cassandra` to start cassandra when running DBMS from AWS EC2 t2.small instance
-- 4: start server: `npm start`
+- 4: start server AND Cassandra: `npm start`
 
 ## CRUD Endpoints implemented by Ahmed Elawad
 - Read: (GET): `/api/productView/products/:id`
