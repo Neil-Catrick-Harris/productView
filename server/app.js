@@ -1,4 +1,4 @@
-const newRelic = require('newrelic');
+//const newRelic = require('newrelic');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -16,9 +16,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
 app.get('/api/*', (req, res) => {
-  axios.get(`http://${dbIP}:3002${req.url}`)
-    .then(result => res.send(result.data[0]))
-    .catch(err => res.sendStatus(400));
+  res.redirect(`http://${dbIP}:3002${req.url}`);
 });
 
 app.get('/loaderio-1ffce587c4169230698ec4c56e818db5/', (req, res) => {
