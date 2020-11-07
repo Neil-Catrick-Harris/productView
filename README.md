@@ -1,14 +1,13 @@
-# productView
+# Product View
+This is the Product View service for the Mykea e-commerce app. When implemented, it renders product information for the product ID specified in the URL (e.g. `/products/12` shows the details for the product whose product ID is #12).
+
 ## SETUP:
-<br />1: NPM install dependencies
-<br />2: Seed database: npm run seed:db -> should result in 100 records inserted
-<br />3: start server: npm start
-<br />4: Build client pack: npm run build
+<br />1: Install dependencies: `npm install`
+<br />2: Seed database: `npm run seed`
+<br />3: Start server: `npm start`
+<br />4: Build client bundle: `npm run build`
 
-## CRUD Endpoints implemented by Ahmed Elawad
-- Read: (GET): `/api/productView/products/:id`
-
-## CRUD Endpoints: Added/Modified by Turner Kraus
+## CRUD Endpoints
 ### [Link to Express server](https://github.com/Neil-Catrick-Harris/productView/blob/master/server/app.js)
 - Read: (GET): `/api/productView/products/:id`
   - `:id` can be either the product ID (default is #1-100) OR `all` (responds with entire database)
